@@ -1,5 +1,10 @@
 package com.example;
 
+import java.nio.charset.StandardCharsets;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
 /**
  * 暗号化と複合を行うユーティリティクラス
  */
@@ -9,7 +14,7 @@ public class DemoCipher {
     public static String encrypt(String plaintext) {
         // AES鍵を取得
         String aesKey = "16byte128bit----";
-        SecretKeySpec secretKey = new SecretKeySpec(aesKey.getByte(StandardCharsets.UTF_8), ALGORITHM);
+        SecretKeySpec secretKey = new SecretKeySpec(aesKey.getBytes(StandardCharsets.UTF_8), ALGORITHM);
 
         byte[] unencrypted = null;
         //try{
