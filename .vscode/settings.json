@@ -30,5 +30,6 @@
       "name": "JavaSE-11",
       "path": "/usr/lib/jvm/msopenjdk-current"
     }
-  ]
+  ],
+  "java.configuration.updateBuildConfiguration": "interactive"
 }

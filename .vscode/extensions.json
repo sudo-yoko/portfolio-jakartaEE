@@ -1,12 +1,18 @@
 {
     "recommendations": [
       "daylerees.rainglow",
-      "vscjava.vscode-java-pack",
+      //"vscjava.vscode-java-pack",
+      "vscjava.vscode-java-debug",
+      "VisualStudioExptTeam.vscodeintellicode",
+      "redhat.java",
+      "vscjava.vscode-maven",
+      "vscjava.vscode-java-dependency",
       //"esbenp.prettier-vscode",
       //"dbaeumer.vscode-eslint",
       //"bradlc.vscode-tailwindcss",
       "streetsidesoftware.code-spell-checker",
       //"humao.rest-client"
+      "redhat.vscode-xml"
     ]
   }
   
