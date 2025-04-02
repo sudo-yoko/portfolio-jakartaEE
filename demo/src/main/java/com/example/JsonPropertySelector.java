@@ -78,8 +78,8 @@ public class JsonPropertySelector {
      * JSONを処理する
      */
     private JsonObject processJson(JsonObject jsonObj) {
-        if (this.customJsonProcessor != null) {
-            return this.customJsonProcessor.apply(props, jsonObj);
+        if (customJsonProcessor != null) {
+            return customJsonProcessor.apply(props, jsonObj);
         }
         return defaultJsonProcessor.apply(props, jsonObj);
     }

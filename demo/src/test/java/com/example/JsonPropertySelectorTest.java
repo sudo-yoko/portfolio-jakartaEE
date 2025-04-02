@@ -26,6 +26,7 @@ class JsonPropertySelectorTest {
 
     @Test
     void test() {
+        // フラット構造のJavaオブジェクト
         Person person = new Person();
         person.setFirstName("taro");
         person.setLastName("sato");
@@ -35,13 +36,15 @@ class JsonPropertySelectorTest {
         System.out.println("result -> " + jsonObj);
     }
 
+/**
+ * フラット構造のJavaオブジェクト
+ */
     public static class Person {
         private String firstName;
         private String lastName;
         private Integer age;
 
         public Person() {
-
         }
 
         public String getFirstName() {
