@@ -1,26 +1,34 @@
 {
-    "editor.minimap.enabled": false,
-    // "editor.fontFamily": "'Cascadia Code', 'monospace', monospace",
-    // "editor.fontFamily": "'Fira Mono', 'monospace', monospace",
-    // "editor.fontFamily": "'Ubuntu Mono', 'monospace', monospace",
-    "editor.fontFamily": "'Geist Mono Light', 'monospace', monospace",
-    "editor.fontSize": 15,
-    "terminal.integrated.fontFamily": "'Cascadia Code', 'monospace', monospace",
-    //"terminal.integrated.fontFamily": "'Ubuntu Mono', 'monospace', monospace",
-    //"terminal.integrated.fontSize": 15,
-    "workbench.colorTheme": "Userscape (rainglow)",
-    /*
+  "editor.minimap.enabled": false,
+  // "editor.fontFamily": "'Cascadia Code', 'monospace', monospace",
+  // "editor.fontFamily": "'Fira Mono', 'monospace', monospace",
+  // "editor.fontFamily": "'Ubuntu Mono', 'monospace', monospace",
+  "editor.fontFamily": "'Geist Mono Light', 'monospace', monospace",
+  "editor.fontSize": 15,
+  "terminal.integrated.fontFamily": "'Cascadia Code', 'monospace', monospace",
+  //"terminal.integrated.fontFamily": "'Ubuntu Mono', 'monospace', monospace",
+  //"terminal.integrated.fontSize": 15,
+  "workbench.colorTheme": "Userscape (rainglow)",
+  /*
     "workbench.colorTheme": "Absent (rainglow)",
     "editor.tokenColorCustomizations": {
       "comments": {
         "foreground": "#616E76"
       }
     },*/
-    "explorer.compactFolders": false,
-    "workbench.tree.indent": 20,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "[xml]": {
-      "editor.defaultFormatter": "redhat.vscode-xml"
+  "explorer.compactFolders": false,
+  "workbench.tree.indent": 20,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  },
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-11",
+      "path": "/usr/lib/jvm/msopenjdk-current"
     }
-  }
-  
+  ]
+}
