@@ -67,10 +67,23 @@ public class DemoCipher {
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
 
             // 暗号文をBase64でコードする
-            
+            byte[] encrypted = Base64.getDecoder().decode(ciphertext);
 
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
+            // 復号する
+            unencrypted = cipher.doFinal(encrypted);
+
+            // byte配列を文字列に変換する
+            return new String(unencrypted, StandardCharsets.UTF_8);
+
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException
+                | InvalidKeyException e) {
             throw new RuntimeException(e);
+
+        } finally {
+            // 平文のbyte配列を、GCに依存せずに直ちにクリアする
+            if (unencrypted != null) {
+                clearBytes(unencrypted);
+            }
         }
     }
 
