@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 class DemoCipherTest {
     @Test
-    void test_encrypt() {
+    void test() {
         String password = "password";
         System.out.println("password=" + password);
 

@@ -72,7 +72,7 @@ public class DemoCipher {
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
 
-            // 暗号文をBase64でコードする
+            // 暗号文をBase64デコードする
             byte[] encrypted = Base64.getDecoder().decode(ciphered);
 
             // 復号する

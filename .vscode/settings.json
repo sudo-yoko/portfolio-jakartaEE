@@ -31,5 +31,6 @@
       "path": "/usr/lib/jvm/msopenjdk-current"
     }
   ],
-  "java.configuration.updateBuildConfiguration": "interactive"
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "java.inlayHints.parameterNames.enabled": "none"
 }
