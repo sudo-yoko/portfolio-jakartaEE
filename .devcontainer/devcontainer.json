@@ -1,0 +1,11 @@
+{
+  "name": "Java 11 Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/java:11",
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/java:1": {
+      "version": "11"
+    }
+  },
+  "forwardPorts": [8080],
+  "postCreateCommand": "echo 'Java ready!'"
+}
