@@ -18,6 +18,9 @@
     },*/
     "explorer.compactFolders": false,
     "workbench.tree.indent": 20,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[xml]": {
+      "editor.defaultFormatter": "redhat.vscode-xml"
+    }
   }
   
