@@ -14,9 +14,8 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 
 /**
- * JavaオブジェクトをJSONシリアライズして、指定されたプロパティのみを含む新しいJSONオブジェクトを構築する。<br>
- * デフォルトはフラット構造のJSONに対応。配列構造や入れ子構造の場合は、専用の処理関数を呼び元で作成し、<br>
- * customJsonProcessorにセットする。
+ * JavaオブジェクトをJSONシリアライズして、指定されたプロパティのみを含む新しいJSONオブジェクトを構築する。
+ * デフォルトはフラット構造のJSONに対応。配列構造や入れ子構造の場合は、専用の処理関数を呼び元で作成し、customJsonProcessorにセットする。
  */
 public class JsonPropertySelector {
     private static final Jsonb jsonb = JsonbBuilder.create();
@@ -24,7 +23,7 @@ public class JsonPropertySelector {
     private Set<String> props;
 
     /**
-     * このクラスはファクトリーメソッドを通じてのみインスタンス化させるため、<br>
+     * このクラスはファクトリーメソッドを通じてのみインスタンス化させるため、
      * コンストラクタはプライベートに制限しています。
      */
     private JsonPropertySelector() {
