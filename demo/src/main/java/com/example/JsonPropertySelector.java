@@ -91,7 +91,7 @@ public class JsonPropertySelector {
     private BiFunction<Set<String>, JsonObject, JsonObject> defaultJsonProcessor = (props, jsonObj) -> {
         for (String prop : props) {
             if (!jsonObj.containsKey(prop)) {
-                System.out.println("未定義のプロパティが指定されています。");
+                System.out.println(String.format("未定義のプロパティが指定されています。[%s]", prop));
             }
         }
         JsonObjectBuilder builder = Json.createObjectBuilder();

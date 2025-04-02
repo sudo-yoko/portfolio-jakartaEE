@@ -1,5 +1,6 @@
 package com.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -12,6 +13,7 @@ import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbConfig;
 
 class JsonPropertySelectorTest {
+    static final String LOG_PREFIX = "[TEST] " + JsonPropertySelectorTest.class.getSimpleName() + ": ";
     static Jsonb jsonb;
 
     @BeforeAll
@@ -26,94 +28,130 @@ class JsonPropertySelectorTest {
     }
 
     @Test
-    void test() {
+    void testFlatJson() {
         // フラット構造のJavaオブジェクト
-        Person person = new Person();
-        person.setFirstName("taro");
-        person.setLastName("sato");
-        person.setAge(20);
+        Artifact artifact = new Artifact();
+        artifact.setGroupId("com.example");
+        artifact.setArtifactId("demo");
+        artifact.setVersion("1.0-SNAPSHOT");
+        JsonObject jsonObj = JsonPropertySelector.properties("artifactId,version,test").apply(artifact);
+        System.out.println(LOG_PREFIX + "result -> ");
+        System.out.println(jsonb.toJson(jsonObj));
+    }
 
-        JsonObject jsonObj = JsonPropertySelector.properties("firstName,age,test").apply(person);
-        System.out.println("result -> " + jsonObj);
+    @Test
+    void testNestedJson() {
+        // 入れ子構造のJavaオブジェクト
+        POM pom = new POM();
+
+        Artifact artifact = new Artifact();
+        artifact.setGroupId("com.example");
+        artifact.setArtifactId("demo");
+        artifact.setVersion("1.0-SNAPSHOT");
+        pom.setArtifact(artifact);
+
+        pom.setSource(11);
+        pom.setTarget(11);
+
+        List<Artifact> dependencies = new ArrayList<>();
+        Artifact dependency1 = new Artifact();
+        dependency1.setGroupId("jakarta.platform");
+        dependency1.setArtifactId("jakarta-jakartaee-api");
+        dependency1.setVersion("10.0.0");
+        dependencies.add(dependency1);
+
+        Artifact dependency2 = new Artifact();
+        dependency2.setGroupId("org.eclipse.persistence");
+        dependency2.setArtifactId("org.eclipse.persistence.jpa");
+        dependency2.setVersion("4.0.2");
+        dependencies.add(dependency2);
+        pom.setDependencies(dependencies);
+
+        JsonObject jsonObj = JsonPropertySelector.properties("version").apply(pom);
+        System.out.println(LOG_PREFIX + "result -> ");
+        System.out.println(jsonb.toJson(jsonObj));
     }
 
     /**
      * フラット構造のJavaオブジェクト
      */
-    public static class Person {
-        private String firstName;
-        private String lastName;
-        private Integer age;
+    public static class Artifact {
+        String groupId;
+        String artifactId;
+        String version;
 
-        public Person() {
+        public Artifact() {
         }
 
-        public String getFirstName() {
-            return firstName;
+        public String getGroupId() {
+            return groupId;
         }
 
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
+        public void setGroupId(String groupId) {
+            this.groupId = groupId;
         }
 
-        public String getLastName() {
-            return lastName;
+        public String getArtifactId() {
+            return artifactId;
         }
 
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
+        public void setArtifactId(String artifactId) {
+            this.artifactId = artifactId;
         }
 
-        public Integer getAge() {
-            return age;
+        public String getVersion() {
+            return version;
         }
 
-        public void setAge(Integer age) {
-            this.age = age;
+        public void setVersion(String version) {
+            this.version = version;
         }
-
     }
 
-    public static class PomLike {
+    /**
+     * 入れ子構造のJavaオブジェクト
+     * (POM風オブジェクト)
+     */
+    public static class POM {
 
         private Artifact artifact;
         private Integer source;
         private Integer target;
         private List<Artifact> dependencies;
 
-        private static class Artifact {
-            String groupId;
-            String artifactId;
-            String version;
+        public POM() {
+        }
 
-            public Artifact() {
-            }
+        public Artifact getArtifact() {
+            return artifact;
+        }
 
-            public String getGroupId() {
-                return groupId;
-            }
+        public void setArtifact(Artifact artifact) {
+            this.artifact = artifact;
+        }
 
-            public void setGroupId(String groupId) {
-                this.groupId = groupId;
-            }
+        public Integer getSource() {
+            return source;
+        }
 
-            public String getArtifactId() {
-                return artifactId;
-            }
+        public void setSource(Integer source) {
+            this.source = source;
+        }
 
-            public void setArtifactId(String artifactId) {
-                this.artifactId = artifactId;
-            }
+        public Integer getTarget() {
+            return target;
+        }
 
-            public String getVersion() {
-                return version;
-            }
+        public void setTarget(Integer target) {
+            this.target = target;
+        }
 
-            public void setVersion(String version) {
-                this.version = version;
-            }
+        public List<Artifact> getDependencies() {
+            return dependencies;
+        }
 
+        public void setDependencies(List<Artifact> dependencies) {
+            this.dependencies = dependencies;
         }
     }
-
 }
