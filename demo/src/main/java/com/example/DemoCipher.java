@@ -55,7 +55,13 @@ public class DemoCipher {
         }
     }
 
-    public static String decrypt(String ciphertext) {
+    /**
+     * 復号する
+     * 
+     * @param ciphered 暗号文(暗号化済みのbyte配列をBase64エンコードした文字列形式)
+     * @return 平文
+     */
+    public static String decrypt(String ciphered) {
         // AES鍵を取得
         String aesKey = "16byte128bit----";
         SecretKeySpec secretKey = new SecretKeySpec(aesKey.getBytes(StandardCharsets.UTF_8), ALGORITHM);
@@ -67,7 +73,7 @@ public class DemoCipher {
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
 
             // 暗号文をBase64でコードする
-            byte[] encrypted = Base64.getDecoder().decode(ciphertext);
+            byte[] encrypted = Base64.getDecoder().decode(ciphered);
 
             // 復号する
             unencrypted = cipher.doFinal(encrypted);

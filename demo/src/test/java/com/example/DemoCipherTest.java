@@ -3,15 +3,15 @@ package com.example;
 import org.junit.jupiter.api.Test;
 
 class DemoCipherTest {
-
     @Test
     void test_encrypt() {
-
         String password = "password";
+        System.out.println("password=" + password);
+
         String encrypted = DemoCipher.encrypt(password);
+        System.out.println("encrypted=" + encrypted);
 
-        System.out.println(encrypted);
-        
+        String decrypted = DemoCipher.decrypt(encrypted);
+        System.out.println("decrypted=" + decrypted);
     }
-
 }
