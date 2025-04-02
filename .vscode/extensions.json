@@ -1,6 +1,6 @@
 {
     "recommendations": [
-      //"daylerees.rainglow",
+      "daylerees.rainglow",
       "esbenp.prettier-vscode",
       "dbaeumer.vscode-eslint",
       //"bradlc.vscode-tailwindcss",
