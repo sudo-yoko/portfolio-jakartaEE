@@ -154,4 +154,13 @@ class JsonPropertySelectorTest {
             this.dependencies = dependencies;
         }
     }
+
+    private static BiFunction<Set<String>, JsonObject, JsonObject> jsonProcessor = (props, jsonObj) -> {
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        for (Entry<String, JsonValue> entry : jsonObj.entrySet()) {
+            if (entry.getValue().gatValueType == JsonValue.ValueType.ARRAY) {
+
+            }
+        }
+    };
 }
