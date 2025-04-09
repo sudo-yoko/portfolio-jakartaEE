@@ -38,9 +38,7 @@ class ExtractingJsonSerializerTest {
 
     }
 
-    /**
-     * テストの実行： mvn -Dtest=ExtractingJsonSerializerTest#testFlatJson test
-     */
+    // mvn -Dtest=ExtractingJsonSerializerTest#testFlatJson test
     @Test
     void testFlatJson() {
         // フラット構造のJavaオブジェクトを作成
@@ -57,9 +55,7 @@ class ExtractingJsonSerializerTest {
         System.out.println(jsonb.toJson(jsonObj));
     }
 
-    /**
-     * テストの実行： mvn -Dtest=ExtractingJsonSerializerTest#testNestedJson test
-     */
+    // mvn -Dtest=ExtractingJsonSerializerTest#testNestedJson test
     @Test
     void testNestedJson() {
         // 入れ子構造のJavaオブジェクトを作成
