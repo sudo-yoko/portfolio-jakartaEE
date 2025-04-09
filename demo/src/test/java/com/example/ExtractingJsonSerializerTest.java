@@ -14,6 +14,8 @@ import com.example.ExtractingJsonSerializerTestUtil.Artifact;
 import com.example.ExtractingJsonSerializerTestUtil.POM;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonValue;
@@ -36,21 +38,31 @@ class ExtractingJsonSerializerTest {
 
     }
 
+    /**
+     * テストの実行： mvn -Dtest=ExtractingJsonSerializerTest#testFlatJson test
+     */
     @Test
     void testFlatJson() {
-        // フラット構造のJavaオブジェクト
+        // フラット構造のJavaオブジェクトを作成
         Artifact artifact = new Artifact();
         artifact.setGroupId("com.example");
         artifact.setArtifactId("demo");
         artifact.setVersion("1.0-SNAPSHOT");
-        JsonObject jsonObj = ExtractingJsonSerializer.properties("artifactId,version,test").apply(artifact);
-        System.out.println(LOG_PREFIX + "result -> ");
+
+        // 抽出するプロパティ
+        String properties = "artifactId,version,test";
+
+        JsonObject jsonObj = ExtractingJsonSerializer.properties(properties).apply(artifact);
+        System.out.println(LOG_PREFIX + "result ->");
         System.out.println(jsonb.toJson(jsonObj));
     }
 
+    /**
+     * テストの実行： mvn -Dtest=ExtractingJsonSerializerTest#testNestedJson test
+     */
     @Test
     void testNestedJson() {
-        // 入れ子構造のJavaオブジェクト
+        // 入れ子構造のJavaオブジェクトを作成
         POM pom = new POM();
 
         Artifact artifact = new Artifact();
@@ -76,20 +88,68 @@ class ExtractingJsonSerializerTest {
         dependencies.add(dependency2);
         pom.setDependencies(dependencies);
 
-        JsonObject jsonObj = ExtractingJsonSerializer.properties("version").apply(pom);
+        // 抽出するプロパティ
+        String properties = "artifact";
+
+        JsonObject jsonObj = ExtractingJsonSerializer.properties(properties)
+                .customJsonProcessor(jsonProcessor)
+                .apply(pom);
+
         System.out.println(LOG_PREFIX + "result -> ");
         System.out.println(jsonb.toJson(jsonObj));
     }
 
     /**
-     * 入れ子構造のJavaオブジェクト
+     * 入れ子構造のJSONオブジェクトを処理する関数
      */
     private static BiFunction<Set<String>, JsonObject, JsonObject> jsonProcessor = (props, jsonObj) -> {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         for (Entry<String, JsonValue> entry : jsonObj.entrySet()) {
-            if (entry.getValue().getValueType() == JsonValue.ValueType.ARRAY) {
-
+            if ("artifact".equals(entry.getKey())) {
+                JsonObject artifact = entry.getValue().asJsonObject();
+                JsonObject extracted = extract(props, artifact);
+                if (!extracted.isEmpty()) {
+                    builder.add(entry.getKey(), extracted);
+                }
+            } else if ("dependencies".equals(entry.getKey())) {
+                JsonArray dependencies = entry.getValue().asJsonArray();
+                JsonArray extracted = extract(props, dependencies);
+                if (!extracted.isEmpty()) {
+                    builder.add(entry.getKey(), extracted);
+                }
+            } else {
+                if (props.contains(entry.getKey())) {
+                    builder.add(entry.getKey(), entry.getValue());
+                }
             }
         }
+        return builder.build();
     };
+
+    /**
+     * JSONオブジェクトの配列から、指定されたプロパティを抽出する
+     */
+    private static JsonArray extract(Set<String> props, JsonArray arr) {
+        JsonArrayBuilder builder = Json.createArrayBuilder();
+        arr.getValuesAs(JsonObject.class).forEach(obj -> {
+            JsonObject extracted = extract(props, obj);
+            if (!extracted.isEmpty()) {
+                builder.add(extracted);
+            }
+        });
+        return builder.build();
+    }
+
+    /**
+     * JSONオブジェクトから、指定されたプロパティを抽出する
+     */
+    private static JsonObject extract(Set<String> props, JsonObject obj) {
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        obj.keySet().forEach(key -> {
+            if (props.contains(key)) {
+                builder.add(key, obj.get(key));
+            }
+        });
+        return builder.build();
+    }
 }

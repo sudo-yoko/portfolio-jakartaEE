@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 class DemoCipherTest {
     static final String LOG_PREFIX = "[TEST] " + DemoCipherTest.class.getSimpleName() + ": ";
 
+    /**
+     * テストの実行： mvn -Dtest=DemoCipherTest#test test
+     */
     @Test
     void test() {
         String password = "password";
