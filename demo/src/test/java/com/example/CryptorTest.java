@@ -2,21 +2,19 @@ package com.example;
 
 import org.junit.jupiter.api.Test;
 
-class DemoCipherTest {
-    static final String LOG_PREFIX = "[TEST] " + DemoCipherTest.class.getSimpleName() + ": ";
+class CryptorTest {
+    static final String LOG_PREFIX = "[TEST] " + CryptorTest.class.getSimpleName() + ": ";
 
-    /**
-     * テストの実行： mvn -Dtest=DemoCipherTest#test test
-     */
+    // mvn -Dtest=CryptorTest#test test
     @Test
     void test() {
         String password = "password";
         System.out.println(LOG_PREFIX + "password=" + password);
 
-        String encrypted = DemoCipher.encrypt(password);
+        String encrypted = Cryptor.encrypt(password);
         System.out.println(LOG_PREFIX + "encrypted=" + encrypted);
 
-        String decrypted = DemoCipher.decrypt(encrypted);
+        String decrypted = Cryptor.decrypt(encrypted);
         System.out.println(LOG_PREFIX + "decrypted=" + decrypted);
     }
 }
