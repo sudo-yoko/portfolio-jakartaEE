@@ -14,10 +14,10 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 
 /**
- * JavaオブジェクトをJSONシリアライズして、指定されたプロパティのみを含む新しいJSONオブジェクトを構築する。
+ * Javaオブジェクトから指定プロパティのみを抽出してJSON化するカスタムシリアライザ。
  * デフォルトはフラット構造のJSONに対応。配列構造や入れ子構造の場合は、専用の処理関数を呼び元で作成し、customJsonProcessorにセットする。
  */
-public class JsonPropertySelector {
+public class ExtractingJsonSerializer {
     private static final Jsonb jsonb = JsonbBuilder.create();
 
     private Set<String> props;
@@ -26,7 +26,7 @@ public class JsonPropertySelector {
      * このクラスはファクトリーメソッドを通じてのみインスタンス化させるため、
      * コンストラクタはプライベートに制限しています。
      */
-    private JsonPropertySelector() {
+    private ExtractingJsonSerializer() {
 
     }
 
@@ -36,8 +36,8 @@ public class JsonPropertySelector {
      * @param properties 抽出するプロパティ名。複数ある場合はカンマで区切る
      * @return 自身のインスタンスを返すため、メソッドチェーンが可能
      */
-    public static JsonPropertySelector properties(String properties) {
-        JsonPropertySelector instance = new JsonPropertySelector();
+    public static ExtractingJsonSerializer properties(String properties) {
+        ExtractingJsonSerializer instance = new ExtractingJsonSerializer();
         if (properties == null || properties.isBlank()) {
             return instance;
         }
@@ -112,7 +112,7 @@ public class JsonPropertySelector {
      * カスタムのJSON処理関数を設定する
      * 自身のインスタンスを返すため、メソッドチェーンが可能
      */
-    public JsonPropertySelector customJsonProcessor(
+    public ExtractingJsonSerializer customJsonProcessor(
             BiFunction<Set<String>, JsonObject, JsonObject> customJsonProcessor) {
         this.customJsonProcessor = customJsonProcessor;
         return this;

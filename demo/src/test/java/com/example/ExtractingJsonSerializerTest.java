@@ -2,18 +2,27 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.function.BiFunction;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.example.ExtractingJsonSerializerTestUtil.Artifact;
+import com.example.ExtractingJsonSerializerTestUtil.POM;
+
+import jakarta.json.Json;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
+import jakarta.json.JsonValue;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbConfig;
 
-class JsonPropertySelectorTest {
-    static final String LOG_PREFIX = "[TEST] " + JsonPropertySelectorTest.class.getSimpleName() + ": ";
+class ExtractingJsonSerializerTest {
+    static final String LOG_PREFIX = "[TEST] " + ExtractingJsonSerializerTest.class.getSimpleName() + ": ";
     static Jsonb jsonb;
 
     @BeforeAll
@@ -34,7 +43,7 @@ class JsonPropertySelectorTest {
         artifact.setGroupId("com.example");
         artifact.setArtifactId("demo");
         artifact.setVersion("1.0-SNAPSHOT");
-        JsonObject jsonObj = JsonPropertySelector.properties("artifactId,version,test").apply(artifact);
+        JsonObject jsonObj = ExtractingJsonSerializer.properties("artifactId,version,test").apply(artifact);
         System.out.println(LOG_PREFIX + "result -> ");
         System.out.println(jsonb.toJson(jsonObj));
     }
@@ -67,98 +76,18 @@ class JsonPropertySelectorTest {
         dependencies.add(dependency2);
         pom.setDependencies(dependencies);
 
-        JsonObject jsonObj = JsonPropertySelector.properties("version").apply(pom);
+        JsonObject jsonObj = ExtractingJsonSerializer.properties("version").apply(pom);
         System.out.println(LOG_PREFIX + "result -> ");
         System.out.println(jsonb.toJson(jsonObj));
     }
 
     /**
-     * フラット構造のJavaオブジェクト
-     */
-    public static class Artifact {
-        String groupId;
-        String artifactId;
-        String version;
-
-        public Artifact() {
-        }
-
-        public String getGroupId() {
-            return groupId;
-        }
-
-        public void setGroupId(String groupId) {
-            this.groupId = groupId;
-        }
-
-        public String getArtifactId() {
-            return artifactId;
-        }
-
-        public void setArtifactId(String artifactId) {
-            this.artifactId = artifactId;
-        }
-
-        public String getVersion() {
-            return version;
-        }
-
-        public void setVersion(String version) {
-            this.version = version;
-        }
-    }
-
-    /**
      * 入れ子構造のJavaオブジェクト
-     * (POM風オブジェクト)
      */
-    public static class POM {
-
-        private Artifact artifact;
-        private Integer source;
-        private Integer target;
-        private List<Artifact> dependencies;
-
-        public POM() {
-        }
-
-        public Artifact getArtifact() {
-            return artifact;
-        }
-
-        public void setArtifact(Artifact artifact) {
-            this.artifact = artifact;
-        }
-
-        public Integer getSource() {
-            return source;
-        }
-
-        public void setSource(Integer source) {
-            this.source = source;
-        }
-
-        public Integer getTarget() {
-            return target;
-        }
-
-        public void setTarget(Integer target) {
-            this.target = target;
-        }
-
-        public List<Artifact> getDependencies() {
-            return dependencies;
-        }
-
-        public void setDependencies(List<Artifact> dependencies) {
-            this.dependencies = dependencies;
-        }
-    }
-
     private static BiFunction<Set<String>, JsonObject, JsonObject> jsonProcessor = (props, jsonObj) -> {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         for (Entry<String, JsonValue> entry : jsonObj.entrySet()) {
-            if (entry.getValue().gatValueType == JsonValue.ValueType.ARRAY) {
+            if (entry.getValue().getValueType() == JsonValue.ValueType.ARRAY) {
 
             }
         }
