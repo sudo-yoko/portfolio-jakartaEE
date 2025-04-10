@@ -14,3 +14,10 @@ Java 標準の javax.crypto パッケージを用いた暗号化／複合化の�
 
 :open_file_folder: コード：[Properties.java](demo/src/main/java/com/example/Properties.java)  
 :open_file_folder: 使用例：[PropertiesTest.java](demo/src/test/java/com/example/PropertiesTest.java)
+
+## ExtractingJsonSerializer.java
+Javaオブジェクトから指定プロパティのみを抽出してJSON化するカスタムシリアライザ。  
+APIのレスポンスを、クライアントからの要求に応じて、返却するプロパティを制限したい場合に活用できます。
+
+:open_file_folder: コード：[ExtractingJsonSerializer.java](demo/src/main/java/com/example/ExtractingJsonSerializer.java)  
+:open_file_folder: 使用例：[ExtractingJsonSerializerTest.java](demo/src/test/java/com/example/ExtractingJsonSerializerTest.java)
