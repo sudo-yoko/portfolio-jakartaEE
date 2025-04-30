@@ -34,5 +34,6 @@
   ],
   "java.configuration.updateBuildConfiguration": "interactive",
   "java.inlayHints.parameterNames.enabled": "none",
-  "window.zoomLevel": 1
+  "window.zoomLevel": 1,
+  "editor.codeLens": false
 }

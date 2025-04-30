@@ -93,5 +93,4 @@ public class EmbeddedGlassFishServer {
     private void stop() throws GlassFishException {
         glassfish.stop();
     }
-
 }
