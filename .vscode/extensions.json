@@ -12,7 +12,8 @@
       //"bradlc.vscode-tailwindcss",
       "streetsidesoftware.code-spell-checker",
       //"humao.rest-client"
-      "redhat.vscode-xml"
+      "redhat.vscode-xml",
+      "humao.rest-client"
     ]
   }
   
