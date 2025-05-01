@@ -10,9 +10,13 @@ public class Launcher {
         EmbeddedGlassFishServer app = new EmbeddedGlassFishServer("demo", 8080, 8081);
         app.startup();
 
+        MockApiServer mock = new MockApiServer();
+        mock.startup();
+
         CountDownLatch latch = new CountDownLatch(1);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             app.shutdown();
+            mock.shutdown();
             latch.countDown();
         }));
         System.out.println(LOG_PREFIX + "終了するには Ctrl+C を押してください。");
