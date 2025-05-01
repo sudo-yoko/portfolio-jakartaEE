@@ -1,4 +1,4 @@
-package com.example;
+package com.example.application;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.example.ExtractingJsonSerializerTestUtil.Artifact;
-import com.example.ExtractingJsonSerializerTestUtil.POM;
+import com.example.application.ExtractingJsonSerializerTestUtil.Artifact;
+import com.example.application.ExtractingJsonSerializerTestUtil.POM;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArray;

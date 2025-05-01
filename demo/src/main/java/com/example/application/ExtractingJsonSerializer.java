@@ -1,4 +1,4 @@
-package com.example;
+package com.example.application;
 
 import java.io.StringReader;
 import java.util.Arrays;

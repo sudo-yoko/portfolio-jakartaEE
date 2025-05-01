@@ -11,9 +11,10 @@ import com.sun.net.httpserver.HttpHandler;
 
 /**
  * Slack Webhook エンドポイントのモック
+ * POST /slack/services/{workspaceId}/{applicationId}/{token}
  */
 public class SlackMock implements HttpHandler {
-    private static final String LOG_PREFIX = ">>> ";
+    private static final String LOG_PREFIX = ">>> [" + SlackMock.class.getSimpleName() + "]: ";
     public static final Pattern uri = Pattern.compile("^/slack/services/([^/]+)/([^/]+)/([^/]+)$");
 
     @Override
@@ -22,6 +23,11 @@ public class SlackMock implements HttpHandler {
         Matcher matcher = uri.matcher(path);
         if (!matcher.matches()) {
             exchange.sendResponseHeaders(404, -1);
+            exchange.close();
+            return;
+        }
+        if (!"POST".equalsIgnoreCase(exchange.getRequestMethod())) {
+            exchange.sendResponseHeaders(405, -1);
             exchange.close();
             return;
         }
@@ -35,7 +41,7 @@ public class SlackMock implements HttpHandler {
         InputStream stream = exchange.getRequestBody();
         String body = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
 
-        System.out.println(LOG_PREFIX + String.format("Request -> workspaceId=%s, applicationId=%s, token=%s, body=%s",
+        System.out.println(LOG_PREFIX + String.format("Inbound request -> workspaceId=%s, applicationId=%s, token=%s, body=%s",
                 workspaceId, applicationId, token, body));
 
         exchange.sendResponseHeaders(200, -1);
