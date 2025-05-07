@@ -1,11 +1,9 @@
 package com.example.domain.valueobjects;
 
 import com.example.ValidationUtils;
-
 import jakarta.ws.rs.BadRequestException;
 
 public class UserName {
-
     private final String value;
 
     private UserName(String value) {
@@ -25,9 +23,7 @@ public class UserName {
     }
 
     public static class Validator {
-
         private Validator() {
-
         }
 
         public static String validate(String value) {
@@ -41,5 +37,4 @@ public class UserName {
             return null;
         }
     }
-
 }
