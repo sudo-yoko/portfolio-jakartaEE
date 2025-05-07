@@ -7,7 +7,7 @@ public class Launcher {
     private static final String LOG_PREFIX = ">>> ";
 
     public static void main(String args[]) throws InterruptedException {
-        EmbeddedGlassFishServer app = new EmbeddedGlassFishServer("demo", 8080, 8081);
+        EmbeddedGlassFishServer app = new EmbeddedGlassFishServer("project", 8080, 8081);
         app.startup();
 
         MockApiServer mock = new MockApiServer();
