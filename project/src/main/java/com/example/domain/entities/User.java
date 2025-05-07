@@ -13,7 +13,7 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(schema = "DEV", name = "USER")
+@Table(schema = "DEV", name = "USER_INFO")
 @NamedQuery(name = "User.findActive", query = "SELECT e FROM User e WHERE e.userId=:userId AND e.deleted=false")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;

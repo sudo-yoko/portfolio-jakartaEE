@@ -1,5 +1,7 @@
 package com.example.application.users;
 
+import java.net.URI;
+
 import com.example.application.ExtractingJsonSerializer;
 import com.example.domain.valueobjects.UserId;
 
@@ -8,16 +10,33 @@ import jakarta.json.JsonObject;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 @Path("/users")
 public class UsersResource {
 
     @Inject
     private UsersInteractor interactor;
+
+    @Path("/{userId}")
+    @POST
+    public Response postUser(@PathParam("userId") String userId, UsersRequest body, @Context UriInfo uriInfo) {
+
+        String error = UserId.Validator.validate(userId);
+        if (error != null) {
+            throw new BadRequestException(error);
+        }
+        interactor.postUser(body);
+
+        URI newItemUri = uriInfo.getAbsolutePath();
+        return Response.created(newItemUri).build();
+    }
 
     @Path("/{userId}")
     @GET

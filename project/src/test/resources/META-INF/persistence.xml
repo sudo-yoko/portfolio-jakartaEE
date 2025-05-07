@@ -9,6 +9,10 @@
         <class>com.example.domain.entities.User</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
+            <property name="jakarta.persistence.schema-generation.database.action" value="create" />
+            <property name="eclipselink.logging.logger" value="DefaultLogger" />
+            <property name="eclipselink.logging.level" value="FINE" />
+            <property name="eclipselink.logging.level.sql" value="FINE" />
             <!-- Derby  -->
             <property name="eclipselink.target-database"
                 value="org.eclipse.persistence.platform.database.DerbyPlatform" />
@@ -16,10 +20,6 @@
             <property name="eclipselink.jdbc.url" value="jdbc:derby:memory:myDb;create=true" />
             <property name="eclipselink.jdbc.user" value="" />
             <property name="eclipselink.jdbc.password" value="" />
-            <!-- logging -->
-            <property name="logging.logger" value="DefaultLogger" />
-            <property name="eclipselink.logging.level" value="FINE" />
-            <property name="eclipselink.logging.level.sql" value="FINE" />
         </properties>
     </persistence-unit>
 </persistence>

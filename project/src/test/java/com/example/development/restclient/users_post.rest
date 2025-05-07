@@ -1,0 +1,7 @@
+POST http://localhost:8080/project/users/12345e
+Content-Type: application/json
+
+{
+    "userId": "12345ss",
+    "userName": "test taro"
+}
