@@ -34,6 +34,7 @@ public class UserService {
             existingUser.setDeleted(false);
             existingUser.setUserName(user.getUserName());
             repository.merge(existingUser);
+            return;
         }
 
         throw new BadRequestException("ユーザーは存在しています。");

@@ -1,0 +1,7 @@
+PUT http://localhost:8080/project/users/12345
+Content-Type: application/json
+
+{
+    "userId": "12345",
+    "userName": "test tarow"
+}

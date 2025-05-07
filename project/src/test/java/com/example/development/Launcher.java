@@ -2,7 +2,7 @@ package com.example.development;
 
 import java.util.concurrent.CountDownLatch;
 
-// mvn compile test-compile exec:java -Dexec.mainClass=com.example.development.Launcher -Dexec.classpathScope=test
+// mvn compile test-compile exec:java -Dexec.mainClass=com.example.development.Launcher -Dexec.classpathScope=test -Duser.timezone=Asia/Tokyo
 public class Launcher {
     private static final String LOG_PREFIX = ">>> ";
 

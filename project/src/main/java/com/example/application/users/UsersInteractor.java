@@ -1,10 +1,12 @@
 package com.example.application.users;
 
+import com.example.OffsetDateTimeUtils;
 import com.example.domain.entities.User;
 import com.example.domain.services.UserService;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 
 @RequestScoped
 public class UsersInteractor {
@@ -14,10 +16,13 @@ public class UsersInteractor {
 
     public UsersResponse getUser(String userId) {
         User user = service.findUser(userId);
-
+        if (user == null) {
+            throw new NotFoundException("ユーザー情報がありません。");
+        }
         UsersResponse response = new UsersResponse();
         response.setUserId(user.getUserId());
         response.setUserName(user.getUserName());
+        response.setTimestamp(OffsetDateTimeUtils.toJapanIsoString(user.getTimestamp()));
         return response;
     }
 
