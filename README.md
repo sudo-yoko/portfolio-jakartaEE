@@ -21,3 +21,8 @@ APIのレスポンスを、クライアントからの要求に応じて、返�
 
 :open_file_folder: コード：[ExtractingJsonSerializer.java](demo/src/main/java/com/example/ExtractingJsonSerializer.java)  
 :open_file_folder: 使用例：[ExtractingJsonSerializerTest.java](demo/src/test/java/com/example/ExtractingJsonSerializerTest.java)
+
+
+
+
+依存ライブラリをなるべく使用しない構成

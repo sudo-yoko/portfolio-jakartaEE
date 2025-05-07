@@ -81,7 +81,7 @@ public class User implements Serializable {
         sb.append("userId=").append(userId).append(", ");
         sb.append("userName=").append(userName).append(", ");
         sb.append("deleted=").append(deleted).append(", ");
-        sb.append("timestamp=").append(timestamp).append(", ");
+        sb.append("timestamp=").append(timestamp);
         sb.append("}");
         return sb.toString();
     }
