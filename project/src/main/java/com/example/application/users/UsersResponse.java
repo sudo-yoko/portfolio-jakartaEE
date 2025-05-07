@@ -24,10 +24,10 @@ public class UsersResponse {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{");
+        sb.append("{ ");
         sb.append("userId=").append(userId).append(", ");
         sb.append("userName=").append(userName);
-        sb.append("}");
+        sb.append(" }");
         return sb.toString();
     }
 }

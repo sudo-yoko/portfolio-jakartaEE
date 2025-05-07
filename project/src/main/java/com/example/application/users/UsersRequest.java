@@ -33,11 +33,11 @@ public class UsersRequest {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{");
+        sb.append("{ ");
         sb.append("userId=").append(userId).append(", ");
         sb.append("userName=").append(userName).append(", ");
         sb.append("properties=").append(properties);
-        sb.append("}");
+        sb.append(" }");
         return sb.toString();
     }
 

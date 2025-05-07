@@ -1,7 +1,7 @@
-POST http://localhost:8080/project/users/12345e
+POST http://localhost:8080/project/users/12345
 Content-Type: application/json
 
 {
-    "userId": "12345ss",
+    "userId": "12345",
     "userName": "test taro"
 }
