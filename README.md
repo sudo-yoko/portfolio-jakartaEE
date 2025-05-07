@@ -5,8 +5,7 @@ jakartaEE 実装集
 
 :open_file_folder: コード：[project/](project)  
 
-開発時には、Embedded GlassFish（組み込み型 GlassFish）を使用してアプリケーションを起動できる構成にしています。  
-通常の GlassFish を使うよりも起動が速いため、開発効率がアップします。
+開発時には Embedded GlassFish（組み込み型 GlassFish）を使用してアプリケーションを起動できる構成にしています。通常の GlassFish を使うよりも起動が速いため、開発効率がアップします。
 
 [起動用ランチャー](project/src/test/java/com/example/development/Launcher.java)   を使用して起動します。データベースは組み込みDerbyを使用する構成になっています。  
 
