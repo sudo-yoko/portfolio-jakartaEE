@@ -41,12 +41,11 @@ public class SlackMock implements HttpHandler {
         InputStream stream = exchange.getRequestBody();
         String body = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
 
-        System.out.println(LOG_PREFIX + String.format("Inbound request -> workspaceId=%s, applicationId=%s, token=%s, body=%s",
-                workspaceId, applicationId, token, body));
+        System.out.println(
+                LOG_PREFIX + String.format("request(Inbound) -> workspaceId=%s, applicationId=%s, token=%s, body=%s",
+                        workspaceId, applicationId, token, body));
 
         exchange.sendResponseHeaders(200, -1);
         exchange.close();
-
     }
-
 }

@@ -3,6 +3,9 @@ package com.example.infrastructure.clients;
 import java.net.InetSocketAddress;
 import java.net.ProxySelector;
 import java.net.http.HttpClient;
+import java.util.logging.Logger;
+
+import com.example.Properties;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -12,15 +15,19 @@ import jakarta.enterprise.context.ApplicationScoped;
  */
 @ApplicationScoped
 public class ProxyHttpClientProvider {
+    private static final Logger logger = Logger.getLogger(ProxyHttpClientProvider.class.getName());
+    private static final String LOG_PREFIX = ">>> [" + ProxyHttpClientProvider.class.getSimpleName() + "]: ";
     private HttpClient client;
 
     @PostConstruct
     private void init() {
         HttpClient.Builder builder = HttpClient.newBuilder();
 
-        String proxyHost = "xxxxx";
-        int proxyPort = 0;
-        InetSocketAddress proxyAddress = new InetSocketAddress(proxyHost, proxyPort);
+        String host = Properties.get("proxy.host");
+        int port = Properties.getInt("proxy.port");
+        logger.info(LOG_PREFIX + String.format("Proxy host: %s, Proxy port: %s", host, port));
+
+        InetSocketAddress proxyAddress = new InetSocketAddress(host, port);
         builder.proxy(ProxySelector.of(proxyAddress));
 
         client = builder.build();

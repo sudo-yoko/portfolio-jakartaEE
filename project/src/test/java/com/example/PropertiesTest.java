@@ -32,22 +32,22 @@ class PropertiesTest {
     // mvn -Dtest=PropertiesTest#getInteger test
     @Test
     void getInteger() {
-        Integer value = Properties.getInteger("value.integer");
+        Integer value = Properties.getInt("value.integer");
         System.out.println(LOG_PREFIX + "result -> " + value);
     }
 
     // mvn -Dtest=PropertiesTest#getIntegerMissingResource test
     @Test
     void getIntegerMissingResource() {
-        assertThrows(MissingResourceException.class, () -> Properties.getInteger("value"));
+        assertThrows(MissingResourceException.class, () -> Properties.getInt("value"));
     }
 
     // mvn -Dtest=PropertiesTest#getIntegerOrDefault test
-    @Test
-    void getIntegerOrDefault() {
-        Integer value = Properties.getIntegerOrDefault("value", null);
-        System.out.println(LOG_PREFIX + "result -> " + value);
-    }
+    //@Test
+    //void getIntegerOrDefault() {
+    //    Integer value = Properties.getIntOrDefault("value", null);
+    //    System.out.println(LOG_PREFIX + "result -> " + value);
+    //}
 
     // mvn -Dtest=PropertiesTest#getBoolean test
     @Test

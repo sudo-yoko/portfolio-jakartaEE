@@ -6,6 +6,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Logger;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -14,12 +15,13 @@ import jakarta.json.JsonObject;
 
 @RequestScoped
 public class SlackClient {
+    private static final Logger logger = Logger.getLogger(SlackClient.class.getName());
     private static final String LOG_PREFIX = ">>> [" + SlackClient.class.getSimpleName() + "]: ";
 
     @Inject
     private ProxyHttpClientProvider client;
 
-    public void poseMessage(String webhookUrl, String message) {
+    public void postMessage(String webhookUrl, String message) {
         JsonObject body = Json.createObjectBuilder().add("text", message).build();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(webhookUrl))
@@ -27,8 +29,7 @@ public class SlackClient {
                 .POST(HttpRequest.BodyPublishers.ofString(body.toString(), StandardCharsets.UTF_8))
                 .build();
 
-        System.out.println(
-                LOG_PREFIX + String.format("Outbound Request -> webhookUrl=%s, message=%s", webhookUrl, message));
+        logger.info(LOG_PREFIX + String.format("Request(Outbound) -> webhookUrl=%s, message=%s", webhookUrl, message));
 
         HttpResponse<String> response;
         try {
@@ -41,8 +42,7 @@ public class SlackClient {
         }
 
         int status = response.statusCode();
-        System.out.println(
-                LOG_PREFIX + String.format("Inbound response -> status=%s", status));
+        logger.info(LOG_PREFIX + String.format("response(Inbound) -> status=%s", status));
         if (response.statusCode() != status) {
             throw new RuntimeException(String.format("Slack Webhook endpoint returned error status. status=%s, body=%s",
                     response.statusCode(), response.body()));

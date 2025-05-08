@@ -13,10 +13,14 @@ public class Launcher {
         MockApiServer mock = new MockApiServer();
         mock.startup();
 
+        SimpleHttpProxy proxy = new SimpleHttpProxy();
+        proxy.startup();
+
         CountDownLatch latch = new CountDownLatch(1);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             app.shutdown();
             mock.shutdown();
+            proxy.shutdown();
             latch.countDown();
         }));
         System.out.println(LOG_PREFIX + "終了するには Ctrl+C を押してください。");

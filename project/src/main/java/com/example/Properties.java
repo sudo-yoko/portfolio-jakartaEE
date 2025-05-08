@@ -17,19 +17,19 @@ public class Properties {
         return defaultValue;
     }
 
-    public static Integer getInteger(String key) {
+    public static int getInt(String key) {
         return get(key, Integer::parseInt);
     }
 
-    public static Integer getIntegerOrDefault(String key, Integer defaultValue) {
+    public static int getIntOrDefault(String key, int defaultValue) {
         return getOrDefault(key, Integer::parseInt, defaultValue);
     }
 
-    public static Boolean getBoolean(String key) {
+    public static boolean getBoolean(String key) {
         return get(key, Boolean::parseBoolean);
     }
 
-    public static Boolean getBooleanOrDefault(String key, Boolean defaultValue) {
+    public static boolean getBooleanOrDefault(String key, boolean defaultValue) {
         return getOrDefault(key, Boolean::parseBoolean, defaultValue);
     }
 

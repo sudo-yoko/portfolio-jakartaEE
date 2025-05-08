@@ -2,7 +2,6 @@ package com.example.application;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;

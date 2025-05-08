@@ -4,6 +4,7 @@ import java.io.StringReader;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import jakarta.json.Json;
@@ -18,6 +19,7 @@ import jakarta.json.bind.JsonbBuilder;
  * デフォルトはフラット構造のJSONに対応。配列構造や入れ子構造の場合は、専用の処理関数を呼び元で作成し、customJsonProcessorにセットする。
  */
 public class ExtractingJsonSerializer {
+    private static final Logger logger = Logger.getLogger(ExtractingJsonSerializer.class.getName());
     private static final Jsonb jsonb = JsonbBuilder.create();
 
     private Set<String> props;
@@ -91,7 +93,7 @@ public class ExtractingJsonSerializer {
     private BiFunction<Set<String>, JsonObject, JsonObject> defaultJsonProcessor = (props, jsonObj) -> {
         for (String prop : props) {
             if (!jsonObj.containsKey(prop)) {
-                System.out.println(String.format("未定義のプロパティが指定されています。[%s]", prop));
+                logger.warning(String.format("未定義のプロパティが指定されています。[%s]", prop));
             }
         }
         JsonObjectBuilder builder = Json.createObjectBuilder();
