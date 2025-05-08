@@ -12,7 +12,7 @@ import org.glassfish.embeddable.GlassFishRuntime;
 import org.glassfish.embeddable.archive.ScatteredArchive;
 
 public class EmbeddedGlassFishServer {
-    private static final String LOG_PREFIX = ">>> ";
+    private static final String CONSOLE_PREFIX = ">>> ";
 
     private final String appName;
     private final int httpPort;
@@ -52,7 +52,7 @@ public class EmbeddedGlassFishServer {
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            System.out.println(LOG_PREFIX + String.format(
+            System.out.println(CONSOLE_PREFIX + String.format(
                     "Embedded GlassFish Server started on HTTP port %s and HTTPS port %s. [application: %s]", httpPort,
                     httpsPort, appName));
         }
@@ -82,7 +82,7 @@ public class EmbeddedGlassFishServer {
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            System.out.println(LOG_PREFIX + "Embedded GlassFish Server stopped.");
+            System.out.println(CONSOLE_PREFIX + "Embedded GlassFish Server stopped.");
         }
     }
 

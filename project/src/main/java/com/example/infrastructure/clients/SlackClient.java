@@ -41,9 +41,8 @@ public class SlackClient {
             throw new RuntimeException(e);
         }
 
-        int status = response.statusCode();
-        logger.info(LOG_PREFIX + String.format("response(Inbound) -> status=%s", status));
-        if (response.statusCode() != status) {
+        logger.info(LOG_PREFIX + String.format("response(Inbound) -> status=%s", response.statusCode()));
+        if (response.statusCode() != 200) {
             throw new RuntimeException(String.format("Slack Webhook endpoint returned error status. status=%s, body=%s",
                     response.statusCode(), response.body()));
         }

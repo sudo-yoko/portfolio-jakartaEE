@@ -26,7 +26,7 @@ import jakarta.ws.rs.core.UriInfo;
 @Path("/users")
 public class UsersResource {
     private static final Logger logger = Logger.getLogger(UsersResource.class.getName());
-    private static final String LOG_PREFIX = ">>> " + UsersResource.class.getSimpleName() + ": ";
+    private static final String LOG_PREFIX = ">>> [" + UsersResource.class.getSimpleName() + "]: ";
 
     @Inject
     private UsersInteractor interactor;

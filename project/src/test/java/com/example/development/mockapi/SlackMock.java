@@ -14,7 +14,7 @@ import com.sun.net.httpserver.HttpHandler;
  * POST /slack/services/{workspaceId}/{applicationId}/{token}
  */
 public class SlackMock implements HttpHandler {
-    private static final String LOG_PREFIX = ">>> [" + SlackMock.class.getSimpleName() + "]: ";
+    private static final String LOG_PREFIX = ">>> ";
     public static final Pattern uri = Pattern.compile("^/slack/services/([^/]+)/([^/]+)/([^/]+)$");
 
     @Override
