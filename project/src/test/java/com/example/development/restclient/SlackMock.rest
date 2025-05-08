@@ -1,4 +1,4 @@
-POST http://localhost:9000/slack/services/T00000000/B00000000/xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+POST http://localhost:9000/slack/services/12345/6789/012345
 Content-Type: application/json; charset=UTF-8
 
 {

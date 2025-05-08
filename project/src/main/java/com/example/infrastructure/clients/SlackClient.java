@@ -29,7 +29,7 @@ public class SlackClient {
         JsonObject body = Json.createObjectBuilder().add("text", message).build();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(webhookUrl))
-                .header("Content-Type", "application.json")
+                .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(body.toString(), StandardCharsets.UTF_8))
                 .build();
 
