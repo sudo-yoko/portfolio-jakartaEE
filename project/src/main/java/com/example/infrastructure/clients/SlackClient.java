@@ -8,6 +8,8 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
+import com.example.Properties;
+
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
@@ -21,7 +23,9 @@ public class SlackClient {
     @Inject
     private ProxyHttpClientProvider client;
 
-    public void postMessage(String webhookUrl, String message) {
+    public void postMessage(String message) {
+        String webhookUrl = Properties.get("slack.webhook.url");
+
         JsonObject body = Json.createObjectBuilder().add("text", message).build();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(webhookUrl))

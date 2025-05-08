@@ -4,7 +4,7 @@ import java.util.ResourceBundle;
 import java.util.function.Function;
 
 public class Properties {
-    private static final ResourceBundle bundle = ResourceBundle.getBundle("project");
+    private static final ResourceBundle bundle = ResourceBundle.getBundle("application");
 
     public static String get(String key) {
         return bundle.getString(key);

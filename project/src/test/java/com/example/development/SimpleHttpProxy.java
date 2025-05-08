@@ -3,14 +3,15 @@ package com.example.development;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import org.eclipse.jetty.proxy.ConnectHandler;
-import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.proxy.ProxyServlet;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * 簡易HTTPプロキシサーバー
@@ -26,17 +27,14 @@ public class SimpleHttpProxy {
     public void startup() {
         try {
             server = new Server(PORT);
-            ConnectHandler proxy = new ConnectHandler();
-            proxy.setHandler(new AbstractHandler() {
-                @Override
-                public void handle(String target, Request baseRequest, HttpServletRequest request,
-                        HttpServletResponse response) throws IOException, ServletException {
-                    logger.info(LOG_PREFIX + String.format("Received request -> method=%s, uri=%s", request.getMethod(),
-                            request.getRequestURI()));
 
-                }
-            });
-            server.setHandler(proxy);
+            ServletContextHandler context = new ServletContextHandler();
+            context.setContextPath("/");
+
+            ServletHolder holder = new ServletHolder(new SimpleHttpProxyImpl());
+            context.addServlet(holder, "/*");
+            server.setHandler(context);
+
             server.start();
             System.out.println(CONSOLE_PREFIX + "Proxy Server started on http://localhost:" + PORT);
             server.join();
@@ -51,6 +49,19 @@ public class SimpleHttpProxy {
             server.destroy();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static class SimpleHttpProxyImpl extends ProxyServlet.Transparent {
+        @Override
+        public void service(ServletRequest request, ServletResponse response) throws ServletException, IOException {
+            // ログ出力
+            HttpServletRequest req = (HttpServletRequest) request;
+            logger.info(LOG_PREFIX
+                    + String.format("Received request -> method=%s, uri=%s", req.getMethod(),
+                            req.getRequestURI()));
+            // デフォルトの転送処理
+            super.service(request, response);
         }
     }
 }

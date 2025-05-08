@@ -15,7 +15,7 @@ public class UsersInteractor {
     @Inject
     private UserService service;
     @Inject
-    private SlackClient client;
+    private SlackClient slack;
 
     public UsersResponse getUser(String userId) {
         User user = service.findUser(userId);
@@ -34,7 +34,7 @@ public class UsersInteractor {
         user.setUserId(request.getUserId());
         user.setUserName(request.getUserName());
         service.createUser(user);
-        client.postMessage(Properties.get("slack.webhook.url"), String.format("ユーザーが登録されました。[%s]", user.getUserId()));
+        slack.postMessage(String.format("ユーザーが登録されました。[%s]", user.getUserId()));
     }
 
     public void putUser(UsersRequest request) {
