@@ -13,14 +13,14 @@ jakartaEE 実装集
 
 その他の特徴として、
 * ドメイン駆動設計(DDD)を採用しています。CRUD操作のみで業務ロジックの無い、シンプルで基本的な構成になっています。
-* CDIとEJBを併用しています。データベース操作を行う層にEJBを使用することで、トランザクション制御はEJBのデフォルト動作を利用します。
+* CDIとEJBを併用しています。データベース操作を行う層にはEJBを使用するようにし、トランザクション制御はEJBのデフォルト動作を利用します。
 
 ## Properties.java
 #### プロパティ取得ユーティリティ
 型を指定したプロパティ取得が可能です。型パラメータと関数インターフェースを用いた実装になっています。
 
-:open_file_folder: コード：[Properties.java](demo/src/main/java/com/example/Properties.java)  
-:open_file_folder: 使用例：[PropertiesTest.java](demo/src/test/java/com/example/PropertiesTest.java)
+:open_file_folder: コード：[Properties.java](project/src/main/java/com/example/Properties.java)  
+:open_file_folder: 使用例：[PropertiesTest.java](project/src/test/java/com/example/PropertiesTest.java)
 
 ## ExtractingJsonSerializer.java
 Javaオブジェクトから指定プロパティのみを抽出してJSON化するカスタムシリアライザ。  
@@ -28,24 +28,24 @@ APIのレスポンスを、クライアントからの要求に応じて、返�
 
 同じことができる既存ライブラリもありますが、依存ライブラリを増やしたくない場合、このように JakartaEE と Java の標準機能だけで作成することもできます。
 
-:open_file_folder: コード：[ExtractingJsonSerializer.java](demo/src/main/java/com/example/ExtractingJsonSerializer.java)  
-:open_file_folder: 使用例：[ExtractingJsonSerializerTest.java](demo/src/test/java/com/example/ExtractingJsonSerializerTest.java)
+:open_file_folder: コード：[ExtractingJsonSerializer.java](project/src/main/java/com/example/application/ExtractingJsonSerializer.java)  
+:open_file_folder: 使用例：[UsersResource.java#L46](project/src/main/java/com/example/application/users/UsersResource.java#L46)
 
 
 ## Cryptor.java
 #### 暗号化／複合化ユーティリティ
 Java 標準の javax.crypto パッケージを用いた暗号化／複合化の実装例
 
-:open_file_folder: コード：[Cryptor.java](demo/src/main/java/com/example/Cryptor.java)  
-:open_file_folder: 使用例：[CryptorTest.java](demo/src/test/java/com/example/CryptorTest.java)
+:open_file_folder: コード：[Cryptor.java](project/src/main/java/com/example/Cryptor.java)  
+:open_file_folder: 使用例：[CryptorTest.java](project/src/test/java/com/example/CryptorTest.java)
 
 
 
 ## Slack通知クライアント
 Slack の Webhook エンドポイントに通知を POST します。プロキシ経由、非同期に送信する実装例です。　
 
-:open_file_folder: コード：[project/src/main/java/com/example/infrastructure/clients/](project/src/main/java/com/example/infrastructure/clients)  
-:open_file_folder: 使用例：[project/src/main/java/com/example/application/users/UsersInteractor.java#L36](project/src/main/java/com/example/application/users/UsersInteractor.java#L36)  
+:open_file_folder: コード：[clients/](project/src/main/java/com/example/infrastructure/clients)  
+:open_file_folder: 使用例：[UsersInteractor.java#L36](project/src/main/java/com/example/application/users/UsersInteractor.java#L36)  
 
 
 
