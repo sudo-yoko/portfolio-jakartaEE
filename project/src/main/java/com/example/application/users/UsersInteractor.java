@@ -1,10 +1,9 @@
 package com.example.application.users;
 
 import com.example.OffsetDateTimeUtils;
-import com.example.Properties;
 import com.example.domain.entities.User;
 import com.example.domain.services.UserService;
-import com.example.infrastructure.clients.SlackClient;
+import com.example.infrastructure.clients.SlackClientAsyncAdapter;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -15,7 +14,7 @@ public class UsersInteractor {
     @Inject
     private UserService service;
     @Inject
-    private SlackClient slack;
+    private SlackClientAsyncAdapter slack;
 
     public UsersResponse getUser(String userId) {
         User user = service.findUser(userId);
@@ -34,7 +33,7 @@ public class UsersInteractor {
         user.setUserId(request.getUserId());
         user.setUserName(request.getUserName());
         service.createUser(user);
-        slack.postMessage(String.format("ユーザーが登録されました。[%s]", user.getUserId()));
+        slack.postMessageAsync(String.format("ユーザーが登録されました。[%s]", user.getUserId()));
     }
 
     public void putUser(UsersRequest request) {

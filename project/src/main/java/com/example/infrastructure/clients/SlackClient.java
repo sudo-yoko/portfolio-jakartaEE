@@ -10,12 +10,12 @@ import java.util.logging.Logger;
 
 import com.example.Properties;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 
-@RequestScoped
+@Stateless
 public class SlackClient {
     private static final Logger logger = Logger.getLogger(SlackClient.class.getName());
     private static final String LOG_PREFIX = ">>> [" + SlackClient.class.getSimpleName() + "]: ";
