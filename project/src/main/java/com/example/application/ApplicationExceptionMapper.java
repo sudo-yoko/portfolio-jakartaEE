@@ -22,7 +22,7 @@ public class ApplicationExceptionMapper implements ExceptionMapper<Throwable> {
                 : Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
         String message = exception.getMessage();
 
-        return Response.status(status).entity(message).type(MediaTypes.APPLICATION_TEXT_UTF_8).build();
+        return Response.status(status).entity(message).type(MediaTypes.TEXT_PLAIN_UTF_8).build();
     }
 
 }
