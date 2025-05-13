@@ -8,7 +8,7 @@ import jakarta.persistence.PersistenceContext;
 @Stateless
 public class UserRepository {
 
-    @PersistenceContext(unitName = "DEV_PU")
+    @PersistenceContext(unitName = "DEV_PU1")
     private EntityManager em;
 
     public User find(String pk) {

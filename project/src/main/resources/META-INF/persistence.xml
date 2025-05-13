@@ -2,9 +2,10 @@
 <persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
-    <!-- 単体テスト(Junit)用 -->
-    <persistence-unit name="TEST_PU1" transaction-type="RESOURCE_LOCAL">
+
+    <persistence-unit name="DEV_PU1" transaction-type="JTA">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>java:comp/DefaultDataSource</jta-data-source>
         <class>com.example.domain.entities.User</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>NONE</shared-cache-mode>
@@ -23,9 +24,10 @@
         </properties>
     </persistence-unit>
 
-    <persistence-unit name="TEST_PU2" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="DEV_PU2" transaction-type="JTA">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>com.example.domain.entities.User</class>
+        <jta-data-source>java:comp/DefaultDataSource</jta-data-source>
+        <class></class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>NONE</shared-cache-mode>
         <properties>
@@ -42,5 +44,4 @@
             <property name="eclipselink.jdbc.password" value="" />
         </properties>
     </persistence-unit>
-
 </persistence>
