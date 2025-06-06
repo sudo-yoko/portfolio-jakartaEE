@@ -1,7 +1,7 @@
 # ポートフォリオ
 jakartaEE 実装集
 
-## JAX-RS を使った REST API の実装例
+## JAX-RS による REST API の実装例
 
 :open_file_folder: コード：[project/](project)  
 
@@ -14,6 +14,16 @@ jakartaEE 実装集
 その他の特徴として、
 * ドメイン駆動設計(DDD)を採用しています。CRUD操作のみで業務ロジックの無い、シンプルで基本的な構成になっています。
 * CDIとEJBを併用しています。データベース操作を行う層にはEJBを使用するようにし、トランザクション制御はEJBのデフォルト動作を利用します。
+
+## クライアント認証
+
+JAX-RSアプリケーションを利用するクライアントを認証します。リクエストフィルタを用いて認証および認可を行います。  
+
+認証情報の定義は簡易実装になっています。将来的にJSONファイルから読みんだり、外部のキャッシュサービスを利用する実装に差し替えられるようインターフェースを用いた設計にしています。
+
+:open_file_folder: コード：[AuthenticationFilter.java](project/src/main/java/com/example/application/AuthenticationFilter.java)、[AuthorizationFilter.java](project/src/main/java/com/example/application/AuthorizationFilter.java)、[/infrastructure/auth/](project/src/main/java/com/example/infrastructure/auth)  
+:open_file_folder: JUnit：[/application/](project/src/test/java/com/example/application)
+
 
 ## Properties.java
 #### プロパティ取得ユーティリティ
