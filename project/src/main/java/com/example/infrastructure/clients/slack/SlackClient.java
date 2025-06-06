@@ -1,4 +1,4 @@
-package com.example.infrastructure.clients;
+package com.example.infrastructure.clients.slack;
 
 import java.io.IOException;
 import java.net.URI;
@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 import com.example.Properties;
+import com.example.infrastructure.clients.ProxyClient;
 
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -21,7 +22,7 @@ public class SlackClient {
     private static final String LOG_PREFIX = ">>> [" + SlackClient.class.getSimpleName() + "]: ";
 
     @Inject
-    private ProxyHttpClientProvider client;
+    private ProxyClient client;
 
     public void postMessage(String message) {
         String webhookUrl = Properties.get("slack.webhook.url");

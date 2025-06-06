@@ -14,9 +14,9 @@ import jakarta.enterprise.context.ApplicationScoped;
  * プロキシ設定済みのHTTPクライアントの提供
  */
 @ApplicationScoped
-public class ProxyHttpClientProvider {
-    private static final Logger logger = Logger.getLogger(ProxyHttpClientProvider.class.getName());
-    private static final String LOG_PREFIX = ">>> [" + ProxyHttpClientProvider.class.getSimpleName() + "]: ";
+public class ProxyClient {
+    private static final Logger logger = Logger.getLogger(ProxyClient.class.getName());
+    private static final String LOG_PREFIX = ">>> [" + ProxyClient.class.getSimpleName() + "]: ";
     private HttpClient client;
 
     @PostConstruct

@@ -5,12 +5,12 @@ import java.lang.reflect.Method;
 
 public class ReflectionUtils {
 
-    @SuppressWarnings("unchecked")
-    public static <T> T getFieldValue(Object obj, String fieldName, Class<T> cassTo) {
+    public static <T> T getFieldValue(Object obj, String fieldName, Class<T> type) {
         try {
             Field field = obj.getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
-            return (T) field.get(obj);
+            Object value = field.get(obj);
+            return type.cast(value);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

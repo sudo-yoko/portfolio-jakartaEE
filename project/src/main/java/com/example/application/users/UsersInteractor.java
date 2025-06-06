@@ -3,7 +3,7 @@ package com.example.application.users;
 import com.example.OffsetDateTimeUtils;
 import com.example.domain.entities.User;
 import com.example.domain.services.UserService;
-import com.example.infrastructure.clients.SlackClientAsyncAdapter;
+import com.example.infrastructure.clients.slack.SlackClientAsyncAdapter;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;

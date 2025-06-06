@@ -1,4 +1,4 @@
-package com.example.infrastructure.clients;
+package com.example.infrastructure.clients.slack;
 
 import jakarta.ejb.Asynchronous;
 import jakarta.ejb.Stateless;
