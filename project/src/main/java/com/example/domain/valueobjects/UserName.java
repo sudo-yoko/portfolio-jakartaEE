@@ -24,13 +24,13 @@ public class UserName {
 
         public static void validate(String value) {
             if (value == null || value.isBlank()) {
-                throw new ValidationErrorException("userName", "userNameを入力してください。");
+                throw new ValidationErrorException("userName", "ユーザー名を入力してください。");
             }
             ValidationErrorException ex = new ValidationErrorException();
             if (value.length() > 20) {
-                ex.addDetail("UserName", "UserNameは20文字までにしてください。");
+                ex.addError("userName", "ユーザー名は20文字までにしてください。");
             }
-            if (ex.getDetails().size() > 0) {
+            if (ex.getErrors().size() > 0) {
                 throw ex;
             }
         }

@@ -1,59 +1,50 @@
 package com.example.application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ErrorResponse {
-    private String type;
-    private String message;
-    private List<Detail> details;
+    private List<Error> errors;
 
     public ErrorResponse() {
-
+        errors = new ArrayList<>();
     }
 
-    public String getType() {
-        return type;
+    public ErrorResponse(String type, String message) {
+        this();
+        addError(type, message);
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public List<Error> getErrors() {
+        return List.copyOf(errors);
     }
 
-    public String getMessage() {
-        return message;
+    public void addError(String type, String message) {
+        errors.add(new Error(type, message));
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void addAllErrors(List<Error> errors) {
+        errors.forEach(e -> addError(e.getType(), e.getMessage()));
     }
 
-    public List<Detail> getDetails() {
-        return details;
-    }
-
-    public void setDetails(List<Detail> details) {
-        this.details = details;
-    }
-
-    public static class Detail {
-        private String field;
+    public static class Error {
+        private String type;
         private String message;
 
-        public Detail() {
-
+        public Error() {
         }
 
-        public Detail(String field, String message) {
-            this.field = field;
+        public Error(String type, String message) {
+            this.type = type;
             this.message = message;
         }
 
-        public String getField() {
-            return field;
+        public String getType() {
+            return type;
         }
 
-        public void setField(String field) {
-            this.field = field;
+        public void setType(String type) {
+            this.type = type;
         }
 
         public String getMessage() {

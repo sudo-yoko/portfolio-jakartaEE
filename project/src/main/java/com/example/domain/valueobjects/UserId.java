@@ -25,16 +25,16 @@ public class UserId {
 
         public static void validate(String value) {
             if (value == null || value.isBlank()) {
-                throw new ValidationErrorException("UserId", "UserIdを入力してください。");
+                throw new ValidationErrorException("userId", "ユーザーIDを入力してください。");
             }
             ValidationErrorException ex = new ValidationErrorException();
             if (!ValidationUtils.isNumeric(value)) {
-                ex.addDetail("UserId", "UserIdは数字のみにしてください。");
+                ex.addError("userId", "ユーザーIDは数字のみにしてください。");
             }
             if (value.length() > 10) {
-                ex.addDetail("UserId", "UserIdは10文字までにしてください。");
+                ex.addError("userId", "ユーザーIDは10文字までにしてください。");
             }
-            if (ex.getDetails().size() > 0) {
+            if (ex.getErrors().size() > 0) {
                 throw ex;
             }
         }

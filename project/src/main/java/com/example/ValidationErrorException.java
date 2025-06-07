@@ -6,37 +6,36 @@ import java.util.List;
 public class ValidationErrorException extends RuntimeException {
     static final long serialVersionUID = 1L;
 
-    private final List<Detail> details;
+    private final List<Error> errors;
 
     public ValidationErrorException() {
-        this.details = new ArrayList<>();
+        this.errors = new ArrayList<>();
     }
 
     public ValidationErrorException(String field, String message) {
         this();
-        addDetail(field, message);
+        addError(field, message);
     }
 
-    public ValidationErrorException addDetail(String field, String message) {
-        details.add(new Detail(field, message));
+    public ValidationErrorException addError(String field, String message) {
+        errors.add(new Error(field, message));
         return this;
     }
 
-    public List<Detail> getDetails() {
-        return List.copyOf(details);
+    public List<Error> getErrors() {
+        return List.copyOf(errors);
     }
 
-    
     @Override
     public String getMessage() {
-        return "バリデーションエラー: details=" + getDetails();
+        return "バリデーションエラー: errors=" + getErrors();
     }
 
-    public static class Detail {
+    public static class Error {
         private String field;
         private String message;
 
-        public Detail(String field, String message) {
+        public Error(String field, String message) {
             this.field = field;
             this.message = message;
         }

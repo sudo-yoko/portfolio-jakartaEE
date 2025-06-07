@@ -1,7 +1,5 @@
 package com.example.application;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import com.example.ValidationErrorException;
@@ -15,7 +13,6 @@ public class ErrorResponseFactory {
     private static final String LOG_PREFIX = ">>> [" + ErrorResponseFactory.class.getSimpleName() + "]: ";
 
     private ErrorResponseFactory() {
-
     }
 
     public static Response build(Throwable throwable) {
@@ -48,34 +45,28 @@ public class ErrorResponseFactory {
 
     public static ResponseBuilder handleWebApplicationException(WebApplicationException cause) {
         int status = cause.getResponse().getStatus();
-
-        ErrorResponse entity = new ErrorResponse();
-        entity.setType(cause.getClass().getSimpleName());
-        entity.setMessage(cause.getMessage());
+        ErrorResponse entity = new ErrorResponse(
+                cause.getClass().getSimpleName(),
+                cause.getMessage());
         return Response.status(status).entity(entity);
     }
 
     public static ResponseBuilder handleValidationErrorException(ValidationErrorException cause) {
         int status = Response.Status.BAD_REQUEST.getStatusCode();
-
         ErrorResponse entity = new ErrorResponse();
-        entity.setType(cause.getClass().getSimpleName());
-        entity.setMessage(cause.getMessage());
-
-        List<ErrorResponse.Detail> details = new ArrayList<>();
-        cause.getDetails().forEach(d -> {
-            details.add(new ErrorResponse.Detail(d.getField(), d.getMessage()));
+        cause.getErrors().forEach(d -> {
+            entity.addError(
+                    cause.getClass().getSimpleName(),
+                    String.format("%s[%s]", d.getMessage(), d.getField()));
         });
-        entity.setDetails(details);
         return Response.status(status).entity(entity);
     }
 
     public static ResponseBuilder handleOtherException(Throwable cause) {
         int status = Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
-
-        ErrorResponse entity = new ErrorResponse();
-        entity.setType(cause.getClass().getSimpleName());
-        entity.setMessage(cause.getMessage());
+        ErrorResponse entity = new ErrorResponse(
+                cause.getClass().getSimpleName(),
+                cause.getMessage());
         return Response.status(status).entity(entity);
     }
 }
