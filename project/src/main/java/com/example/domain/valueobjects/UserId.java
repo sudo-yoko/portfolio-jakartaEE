@@ -1,7 +1,7 @@
 package com.example.domain.valueobjects;
 
+import com.example.ValidationErrorException;
 import com.example.ValidationUtils;
-import jakarta.ws.rs.BadRequestException;
 
 public class UserId {
     private final String value;
@@ -15,10 +15,7 @@ public class UserId {
     }
 
     public static UserId of(String value) {
-        String error = Validator.validate(value);
-        if (!error.isBlank()) {
-            throw new BadRequestException("UserIdが不正です。");
-        }
+        Validator.validate(value);
         return new UserId(value);
     }
 
@@ -26,14 +23,20 @@ public class UserId {
         private Validator() {
         }
 
-        public static String validate(String value) {
+        public static void validate(String value) {
             if (value == null || value.isBlank()) {
-                throw new BadRequestException("UserIdを入力してください。");
+                throw new ValidationErrorException("UserId", "UserIdを入力してください。");
             }
+            ValidationErrorException ex = new ValidationErrorException();
             if (!ValidationUtils.isNumeric(value)) {
-                throw new BadRequestException("UserIdは数字のみにしてください。");
+                ex.addDetail("UserId", "UserIdは数字のみにしてください。");
             }
-            return null;
+            if (value.length() > 10) {
+                ex.addDetail("UserId", "UserIdは10文字までにしてください。");
+            }
+            if (ex.getDetails().size() > 0) {
+                throw ex;
+            }
         }
     }
 }

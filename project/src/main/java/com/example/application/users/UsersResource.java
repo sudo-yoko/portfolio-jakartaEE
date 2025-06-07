@@ -3,13 +3,14 @@ package com.example.application.users;
 import java.net.URI;
 import java.util.logging.Logger;
 
+import com.example.ValidationErrorException;
 import com.example.application.ExtractingJsonSerializer;
 import com.example.application.MediaTypes;
 import com.example.domain.valueobjects.UserId;
+import com.example.domain.valueobjects.UserName;
 
 import jakarta.inject.Inject;
 import jakarta.json.JsonObject;
-import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -37,10 +38,7 @@ public class UsersResource {
     public Response getUser(@PathParam("userId") String userId, @QueryParam("properties") String properties) {
         logger.info(LOG_PREFIX + String.format("Request(inbound) GET -> userId=%s, properties=%s", userId, properties));
 
-        String error = UserId.Validator.validate(userId);
-        if (error != null) {
-            throw new BadRequestException(error);
-        }
+        UserId.Validator.validate(userId);
         UsersResponse response = interactor.getUser(userId);
 
         JsonObject filteredResponse = ExtractingJsonSerializer.properties(properties).apply(response);
@@ -53,13 +51,12 @@ public class UsersResource {
     public Response postUser(@PathParam("userId") String userId, UsersRequest body, @Context UriInfo uriInfo) {
         logger.info(LOG_PREFIX + String.format("Request(inbound) POST -> userId=%s, body=%s", userId, body.toString()));
 
-        String error = UserId.Validator.validate(userId);
-        if (error != null) {
-            throw new BadRequestException(error);
-        }
+        UserId.Validator.validate(body.getUserId());
         if (!userId.equals(body.getUserId())) {
-            throw new BadRequestException("userIdが不一致です。");
+            throw new ValidationErrorException("userId", "userIdが不一致です。");
         }
+        UserName.Validator.validate(body.getUserName());
+
         interactor.postUser(body);
 
         URI newItemUri = uriInfo.getAbsolutePath();
@@ -72,12 +69,9 @@ public class UsersResource {
     public Response putUser(@PathParam("userId") String userId, UsersRequest body) {
         logger.info(LOG_PREFIX + String.format("Request(inbound) PUT -> userId=%s, body=%s", userId, body.toString()));
 
-        String error = UserId.Validator.validate(userId);
-        if (error != null) {
-            throw new BadRequestException(error);
-        }
+        UserId.Validator.validate(userId);
         if (!userId.equals(body.getUserId())) {
-            throw new BadRequestException("userIdが不一致です。");
+            throw new ValidationErrorException("userId", "userIdが不一致です。");
         }
         interactor.putUser(body);
 
@@ -89,10 +83,7 @@ public class UsersResource {
     public Response deleteUser(@PathParam("userId") String userId) {
         logger.info(LOG_PREFIX + String.format("Request(inbound) DELETE -> userId=%s", userId));
 
-        String error = UserId.Validator.validate(userId);
-        if (error != null) {
-            throw new BadRequestException(error);
-        }
+        UserId.Validator.validate(userId);
         interactor.deleteUser(userId);
         return Response.ok().build();
     }

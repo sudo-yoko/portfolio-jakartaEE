@@ -1,7 +1,6 @@
 package com.example.domain.valueobjects;
 
-import com.example.ValidationUtils;
-import jakarta.ws.rs.BadRequestException;
+import com.example.ValidationErrorException;
 
 public class UserName {
     private final String value;
@@ -15,10 +14,7 @@ public class UserName {
     }
 
     public static UserName of(String value) {
-        String error = Validator.validate(value);
-        if (!error.isBlank()) {
-            throw new BadRequestException("UserNameが不正です。");
-        }
+        Validator.validate(value);
         return new UserName(value);
     }
 
@@ -26,15 +22,17 @@ public class UserName {
         private Validator() {
         }
 
-        public static String validate(String value) {
+        public static void validate(String value) {
             if (value == null || value.isBlank()) {
-                throw new BadRequestException("UserNameを入力してください。");
+                throw new ValidationErrorException("userName", "userNameを入力してください。");
             }
-            if (value.length() > 20)
-                if (!ValidationUtils.isNumeric(value)) {
-                    throw new BadRequestException("UserNameは20文字までにしてください。");
-                }
-            return null;
+            ValidationErrorException ex = new ValidationErrorException();
+            if (value.length() > 20) {
+                ex.addDetail("UserName", "UserNameは20文字までにしてください。");
+            }
+            if (ex.getDetails().size() > 0) {
+                throw ex;
+            }
         }
     }
 }
