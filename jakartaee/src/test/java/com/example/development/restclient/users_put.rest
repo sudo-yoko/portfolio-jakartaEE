@@ -1,4 +1,5 @@
-PUT http://localhost:8080/project/users/12345
+PUT http://localhost:8080/jakartaee/users/12345
+X-Api-Key: key-00001
 Content-Type: application/json
 
 {
