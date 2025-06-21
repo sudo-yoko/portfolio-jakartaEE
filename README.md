@@ -1,7 +1,7 @@
 # ポートフォリオ
-jakartaEE 実装集
+Java 実装集
 
-## JAX-RS による REST API アプリケーションの実装例
+## JakartaEE: JAX-RS による REST API アプリケーションの実装例
 
 :open_file_folder: コード：[jakartaee/](jakartaee)  
 
@@ -15,7 +15,7 @@ jakartaEE 実装集
 * ドメイン駆動設計(DDD)を採用しています。CRUD操作のみで業務ロジックの無い、シンプルで基本的な構成になっています。
 * CDIとEJBを併用しています。データベース操作を行う層にはEJBを使用するようにし、トランザクション制御はEJBのデフォルト動作を利用します。
 
-## アプリミドル基盤
+## JakartaEE: JAX-RS アプリミドル基盤
 #### クライアント認証
 JAX-RSアプリケーションを利用するクライアントを認証します。リクエストフィルタを用いて認証および認可を行います。  
 
@@ -61,6 +61,21 @@ Slack の Webhook エンドポイントに通知を POST します。プロキ�
 
 :open_file_folder: コード：[clients/](jakartaee/src/main/java/com/example/infrastructure/clients)  
 :open_file_folder: 使用例：[UsersInteractor.java#L36](jakartaee/src/main/java/com/example/application/users/UsersInteractor.java#L36)  
+
+
+## JEP330 (Launch Single-File Source-Code Programs)
+Java11で導入された JEP330 (Launch Single-File Source-Code Programs)を使用して、便利なツールをいくつか作成しました。  
+Javaソースを事前コンパイルしないで直接実行するため、スクリプトのように手軽に実行できます。Java標準APIのみを使ったシンプルな利用であれば非常に簡単です。
+
+#### デスクトップ時計
+Windows タスクバーの時計には分(minutes)までしか表示されません。秒まで表示できるデスクトップ時計です。Swingを使ってGUIを作成しています。
+
+:open_file_folder: コード：[DesktopClocker.java](JEP330/desctop-clocker/DesktopClocker.java)  
+
+#### APIモック
+ローカル環境で起動するAPIモックの実装例です。Java標準のcom.sun.net.httpserver.HttpServerを使っています。
+
+:open_file_folder: コード：[MockApiServer.java](JEP330/mockapi-server/MockApiServer.java)  
 
 
 
