@@ -15,8 +15,6 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 // java MockApiServer.java
-// curl -i http://localhost:8080/users
-// curl -i http://localhost:8080/users/12345?test1=aaa&test2=ccc&option=1
 public class MockApiServer {
     private static final String LOG_PREFIX = String.format(">>> [%s]: ", MockApiServer.class.getSimpleName());
     private static final int PORT = 8080;
