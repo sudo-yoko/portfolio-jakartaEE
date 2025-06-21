@@ -11,17 +11,15 @@ public class test {
 
         List<Map<String, String>> users = new ArrayList<>();
 
-        /*
-         * Map<String, String> user1 = new HashMap<>();
-         * user1.put("userId", "00001");
-         * user1.put("userName", "test taro");
-         * users.add(user1);
-         * 
-         * Map<String, String> user2 = new HashMap<>();
-         * user2.put("userId", "00002");
-         * user2.put("userName", "test jiro");
-         * users.add(user2);
-         */
+        Map<String, String> user1 = new HashMap<>();
+        user1.put("userId", "00001");
+        user1.put("userName", "test taro");
+        users.add(user1);
+
+        Map<String, String> user2 = new HashMap<>();
+        user2.put("userId", "00002");
+        user2.put("userName", "test jiro");
+        users.add(user2);
 
         StringBuilder sb = new StringBuilder();
         sb.append("{");
