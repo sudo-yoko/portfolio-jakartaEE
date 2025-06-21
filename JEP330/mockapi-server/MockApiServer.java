@@ -50,7 +50,7 @@ public class MockApiServer {
             }
         }
 
-        private void handleUsersRequest(HttpExchange exchange) throws IOException {
+        private void handleUsersRequest(HttpExchange exchange) {
             switch (exchange.getRequestMethod()) {
                 case "GET":
                     getUsers(exchange);
@@ -60,7 +60,7 @@ public class MockApiServer {
             }
         }
 
-        private void handleUserRequest(HttpExchange exchange, String userId) throws IOException {
+        private void handleUserRequest(HttpExchange exchange, String userId) {
             switch (exchange.getRequestMethod()) {
                 case "GET":
                     getUser(exchange, userId);
@@ -73,7 +73,7 @@ public class MockApiServer {
         /**
          * GET /users
          */
-        private void getUsers(HttpExchange exchange) throws IOException {
+        private void getUsers(HttpExchange exchange) {
             List<Map<String, String>> users = new ArrayList<>();
             Map<String, String> user;
 
@@ -99,7 +99,7 @@ public class MockApiServer {
         /**
          * GET /users/{userId}
          */
-        private void getUser(HttpExchange exchange, String userId) throws IOException {
+        private void getUser(HttpExchange exchange, String userId) {
             String query = exchange.getRequestURI().getQuery();
             Map<String, String> queryParams = parseQuery(query);
             String option = queryParams.get("option");
