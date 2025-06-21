@@ -44,7 +44,7 @@ APIのレスポンスを、クライアントからの要求に応じて、返�
 同じことができる既存ライブラリもありますが、依存ライブラリを増やしたくない場合、このように JakartaEE と Java の標準機能だけで作成することもできます。
 
 :open_file_folder: コード：[ExtractingJsonSerializer.java](jakartaee/src/main/java/com/example/application/ExtractingJsonSerializer.java)  
-:open_file_folder: 使用例：[UsersResource.java#L46](jakartaee/src/main/java/com/example/application/users/UsersResource.java#L46)
+:open_file_folder: 使用例：[UsersResource.java#L44](jakartaee/src/main/java/com/example/application/users/UsersResource.java#L44)
 
 
 ## Cryptor.java
