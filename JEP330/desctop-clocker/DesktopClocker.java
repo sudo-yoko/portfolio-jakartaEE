@@ -20,6 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
+/**
+ * Swing/AWTを使用したGUIアプリケーションのため、実行するためにはWindowsなどのローカルディスプレイが必要です。
+ */
 public class DesktopClocker {
 
     static Point initialClick = null;
@@ -32,6 +35,7 @@ public class DesktopClocker {
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null); // 中央に配置
+        frame.setAlwaysOnTop(true);
         frame.setOpacity(0.9f);
 
         // パネルを作成
