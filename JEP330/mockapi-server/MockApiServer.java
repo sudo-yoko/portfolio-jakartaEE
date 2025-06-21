@@ -165,6 +165,9 @@ public class MockApiServer {
         return QUOTE + value + QUOTE;
     }
 
+    /**
+     * JSON配列を作成
+     */
     private static String arr(String key, List<Map<String, String>> recodes) {
         StringBuilder sb = new StringBuilder();
         sb.append(q(key)).append(":").append("[");
