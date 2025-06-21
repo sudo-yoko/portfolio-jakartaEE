@@ -26,6 +26,7 @@ public class MockApiServer {
         server.createContext("/users", new UsersHandler());
         server.setExecutor(null);
         server.start();
+
         System.out.println("Mock API Server started at http://localhost:" + PORT);
         System.out.println("Press Ctrl+C to stop the server.");
     }
@@ -71,6 +72,9 @@ public class MockApiServer {
             }
         }
 
+        /**
+         * GET /users
+         */
         private void getUsers(HttpExchange exchange) throws IOException {
             List<Map<String, String>> users = new ArrayList<>();
             Map<String, String> user;
@@ -94,6 +98,9 @@ public class MockApiServer {
             responseOK(exchange, response);
         }
 
+        /**
+         * GET /users/{userId}
+         */
         private void getUser(HttpExchange exchange, String userId) throws IOException {
             String query = exchange.getRequestURI().getQuery();
             Map<String, String> queryParams = parseQuery(query);
@@ -113,6 +120,9 @@ public class MockApiServer {
         }
     }
 
+    /**
+     * 200 OK
+     */
     private static void responseOK(HttpExchange exchange, String body) {
         System.out.println(LOG_PREFIX + String.format("Response -> %s", body));
         try {
@@ -127,6 +137,9 @@ public class MockApiServer {
         }
     }
 
+    /**
+     * 405 Method Not Allowed
+     */
     private static void responseMethodNotAllowed(HttpExchange exchange) {
         try {
             exchange.sendResponseHeaders(405, -1);
