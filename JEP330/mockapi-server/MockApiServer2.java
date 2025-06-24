@@ -19,9 +19,6 @@ public class MockApiServer2 {
     private static final String LOG_PREFIX = String.format(">>> [%s]: ", MockApiServer2.class.getSimpleName());
     private static final int PORT = 8080;
 
-    /**
-     * ルート定義
-     */
     private static final List<Route> routes = List.of(
             new Route("GET", "^/users$", new GetUsersHandler()),
             new Route("GET", "^/users/(\\d+)$", new GetUserHandler()),
@@ -56,10 +53,6 @@ public class MockApiServer2 {
         void handle(HttpExchange exchange, Matcher pathMatcher);
     }
 
-    /**
-     * リクエストを処理するハンドラー
-     * GET /users
-     */
     public static class GetUsersHandler implements RequestHandler {
         @Override
         public void handle(HttpExchange exchange, Matcher pathMatcher) {
@@ -75,10 +68,6 @@ public class MockApiServer2 {
         }
     }
 
-    /**
-     * リクエストを処理するハンドラー
-     * GET /users/{userId}
-     */
     public static class GetUserHandler implements RequestHandler {
         @Override
         public void handle(HttpExchange exchange, Matcher pathMatcher) {
@@ -99,17 +88,13 @@ public class MockApiServer2 {
         }
     }
 
-    /**
-     * リクエストを処理するハンドラー
-     * POST /users/{userId}
-     */
     public static class PostUserHandler implements RequestHandler {
         @Override
         public void handle(HttpExchange exchange, Matcher pathMatcher) {
             try {
                 String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
                 System.out.println(LOG_PREFIX + String.format("Request -> body=%s", body));
-                Response.Created(exchange);
+                Response.Created(exchange, body);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -131,11 +116,15 @@ public class MockApiServer2 {
             }
         }
 
-        private static void Created(HttpExchange exchange) {
+        private static void Created(HttpExchange exchange, String body) {
             try {
-                // TODO レスポンスヘッダにLocation
-                exchange.sendResponseHeaders(201, -1);
-                exchange.close();
+                exchange.getResponseHeaders().set("Location", exchange.getRequestURI().getPath());
+                exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
+                byte[] responseBytes = body.getBytes(StandardCharsets.UTF_8);
+                exchange.sendResponseHeaders(201, responseBytes.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(responseBytes);
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -149,20 +138,8 @@ public class MockApiServer2 {
                 throw new RuntimeException(e);
             }
         }
-
-        private static void MethodNotAllowed(HttpExchange exchange) {
-            try {
-                exchange.sendResponseHeaders(405, -1);
-                exchange.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
-    /**
-     * ルート定義
-     */
     public static class Route {
         final String method;
         final Pattern pattern;
@@ -187,10 +164,6 @@ public class MockApiServer2 {
             return true;
         }
     }
-
-    /////////////////////////
-    // utilities
-    /////////////////////////
 
     private static Map<String, String> parseQuery(String query) {
         Map<String, String> map = new HashMap<>();
