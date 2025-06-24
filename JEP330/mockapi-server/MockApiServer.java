@@ -68,24 +68,13 @@ public class MockApiServer {
          */
         private void getUsers(HttpExchange exchange) {
             List<Map<String, String>> users = new ArrayList<>();
-            Map<String, String> user;
-
-            user = new HashMap<>();
-            user.put("userId", "00001");
-            user.put("userName", "test taro");
-            users.add(user);
-
-            user = new HashMap<>();
-            user.put("userId", "00002");
-            user.put("userName", "test jiro");
-            users.add(user);
-
+            users.add(user("00001", "test taro"));
+            users.add(user("00002", "test jiro"));
             StringBuilder sb = new StringBuilder();
             sb.append("{");
             sb.append(arr("users", users));
             sb.append("}");
             String response = sb.toString();
-
             Response.Ok(exchange, response);
         }
 
@@ -139,18 +128,13 @@ public class MockApiServer {
 
         private static void Created(HttpExchange exchange) {
             try {
-                // TODO レスポンスヘッダにLocation
-                exchange.sendResponseHeaders(201, -1);
-                exchange.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        private static void NotFound(HttpExchange exchange) {
-            try {
-                exchange.sendResponseHeaders(404, -1);
-                exchange.close();
+                exchange.getResponseHeaders().set("Location", exchange.getRequestURI().getPath());
+                exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
+                byte[] responseBytes = body.getBytes(StandardCharsets.UTF_8);
+                exchange.sendResponseHeaders(201, responseBytes.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(responseBytes);
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -205,5 +189,15 @@ public class MockApiServer {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    /**
+     * ユーザーデータの作成
+     */
+    private static Map<String, String> user(String userId, String userName) {
+        Map<String, String> user = new HashMap<>();
+        user.put("userId", userId);
+        user.put("userName", userName);
+        return user;
     }
 }
