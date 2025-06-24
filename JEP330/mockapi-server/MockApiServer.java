@@ -34,39 +34,32 @@ public class MockApiServer {
 
         @Override
         public void handle(HttpExchange exchange) throws IOException {
+            final String method = exchange.getRequestMethod();
             final String path = exchange.getRequestURI().getPath();
-
-            System.out.println(LOG_PREFIX
-                    + String.format("Request -> method=%s, path=%s, query=%s", exchange.getRequestMethod(), path,
-                            exchange.getRequestURI().getQuery()));
+            System.out.println(LOG_PREFIX + String.format("Request -> method=%s, path=%s,", method, path));
 
             Matcher matcher = pattern.matcher(path);
             String userId = matcher.matches() ? matcher.group(1) : "";
 
             if (userId.isBlank()) {
-                handleUsersRequest(exchange);
+                switch (exchange.getRequestMethod()) {
+                    case "GET":
+                        getUsers(exchange);
+                        break;
+                    default:
+                        Response.MethodNotAllowed(exchange);
+                }
             } else {
-                handleUserRequest(exchange, userId);
-            }
-        }
-
-        private void handleUsersRequest(HttpExchange exchange) {
-            switch (exchange.getRequestMethod()) {
-                case "GET":
-                    getUsers(exchange);
-                    break;
-                default:
-                    responseMethodNotAllowed(exchange);
-            }
-        }
-
-        private void handleUserRequest(HttpExchange exchange, String userId) {
-            switch (exchange.getRequestMethod()) {
-                case "GET":
-                    getUser(exchange, userId);
-                    break;
-                default:
-                    responseMethodNotAllowed(exchange);
+                switch (exchange.getRequestMethod()) {
+                    case "GET":
+                        getUser(exchange, userId);
+                        break;
+                    case "POST":
+                        postUser(exchange, userId);
+                        break;
+                    default:
+                        Response.MethodNotAllowed(exchange);
+                }
             }
         }
 
@@ -93,7 +86,7 @@ public class MockApiServer {
             sb.append("}");
             String response = sb.toString();
 
-            responseOK(exchange, response);
+            Response.Ok(exchange, response);
         }
 
         /**
@@ -114,36 +107,62 @@ public class MockApiServer {
             sb.append("}");
             String response = sb.toString();
 
-            responseOK(exchange, response);
+            Response.Ok(exchange, response);
         }
-    }
 
-    /**
-     * 200 OK
-     */
-    private static void responseOK(HttpExchange exchange, String body) {
-        System.out.println(LOG_PREFIX + String.format("Response -> %s", body));
-        try {
-            exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
-            byte[] responseBytes = body.getBytes(StandardCharsets.UTF_8);
-            exchange.sendResponseHeaders(200, responseBytes.length);
-            try (OutputStream os = exchange.getResponseBody()) {
-                os.write(responseBytes);
+        public void postUser(HttpExchange exchange, String userId) {
+            try {
+                String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
+                System.out.println(LOG_PREFIX + String.format("Request -> body=%s", body));
+                Response.Created(exchange);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
+
     }
 
-    /**
-     * 405 Method Not Allowed
-     */
-    private static void responseMethodNotAllowed(HttpExchange exchange) {
-        try {
-            exchange.sendResponseHeaders(405, -1);
-            exchange.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private static class Response {
+        private static void Ok(HttpExchange exchange, String body) {
+            System.out.println(LOG_PREFIX + String.format("Response -> %s", body));
+            try {
+                exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
+                byte[] responseBytes = body.getBytes(StandardCharsets.UTF_8);
+                exchange.sendResponseHeaders(200, responseBytes.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(responseBytes);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private static void Created(HttpExchange exchange) {
+            try {
+                // TODO レスポンスヘッダにLocation
+                exchange.sendResponseHeaders(201, -1);
+                exchange.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private static void NotFound(HttpExchange exchange) {
+            try {
+                exchange.sendResponseHeaders(404, -1);
+                exchange.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private static void MethodNotAllowed(HttpExchange exchange) {
+            try {
+                exchange.sendResponseHeaders(405, -1);
+                exchange.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

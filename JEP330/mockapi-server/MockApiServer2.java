@@ -16,20 +16,8 @@ import com.sun.net.httpserver.HttpServer;
 
 // java MockApiServer2.java
 public class MockApiServer2 {
-    private static final String LOG_PREFIX = String.format(">>> [%s]: ", MockApiServer.class.getSimpleName());
+    private static final String LOG_PREFIX = String.format(">>> [%s]: ", MockApiServer2.class.getSimpleName());
     private static final int PORT = 8080;
-
-    /**
-     * アプリケーションのエントリポイント
-     */
-    public static void main(String args[]) throws IOException {
-        HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
-        server.createContext("/", new RequestDispatcher());
-        server.setExecutor(null);
-        server.start();
-        System.out.println("Mock API Server started at http://localhost:" + PORT);
-        System.out.println("Press Ctrl+C to stop the server.");
-    }
 
     /**
      * ルート定義
@@ -39,27 +27,33 @@ public class MockApiServer2 {
             new Route("GET", "^/users/(\\d+)$", new GetUserHandler()),
             new Route("POST", "^/users/(\\d+)$", new PostUserHandler()));
 
-    /**
-     * リクエストを振り分けるディスパッチャー
-     */
-    private static class RequestDispatcher implements HttpHandler {
-        @Override
-        public void handle(HttpExchange exchange) throws IOException {
-            final String method = exchange.getRequestMethod();
-            final String path = exchange.getRequestURI().getPath();
+    public static void main(String args[]) throws IOException {
+        HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
+        server.createContext("/", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+                final String method = exchange.getRequestMethod();
+                final String path = exchange.getRequestURI().getPath();
+                System.out.println(LOG_PREFIX + String.format("Request -> method=%s, path=%s,", method, path));
 
-            System.out.println(LOG_PREFIX
-                    + String.format("Request -> method=%s, path=%s, query=%s", method, path,
-                            exchange.getRequestURI().getQuery()));
-
-            for (Route route : routes) {
-                if (route.matches(method, path)) {
-                    route.handler.handle(exchange, route.matcher);
-                    return;
+                for (Route route : routes) {
+                    if (route.matches(method, path)) {
+                        route.handler.handle(exchange, route.matcher);
+                        return;
+                    }
                 }
+                Response.NotFound(exchange);
             }
-            Response.MethodNotAllowed(exchange);
-        }
+        });
+        server.setExecutor(null);
+        server.start();
+
+        System.out.println("Mock API Server started at http://localhost:" + PORT);
+        System.out.println("Press Ctrl+C to stop the server.");
+    }
+
+    private interface RequestHandler {
+        void handle(HttpExchange exchange, Matcher pathMatcher);
     }
 
     /**
@@ -92,7 +86,6 @@ public class MockApiServer2 {
             Map<String, String> queryParams = parseQuery(query);
             String option = queryParams.get("option");
             String userId = pathMatcher.group(1);
-
             System.out.println(LOG_PREFIX
                     + String.format("Request -> query=%s, option=%s", queryParams, option));
 
@@ -123,9 +116,6 @@ public class MockApiServer2 {
         }
     }
 
-    /**
-     * レスポンスファクトリー
-     */
     private static class Response {
         private static void Ok(HttpExchange exchange, String body) {
             System.out.println(LOG_PREFIX + String.format("Response -> %s", body));
@@ -143,7 +133,17 @@ public class MockApiServer2 {
 
         private static void Created(HttpExchange exchange) {
             try {
+                // TODO レスポンスヘッダにLocation
                 exchange.sendResponseHeaders(201, -1);
+                exchange.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private static void NotFound(HttpExchange exchange) {
+            try {
+                exchange.sendResponseHeaders(404, -1);
                 exchange.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -157,6 +157,34 @@ public class MockApiServer2 {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    /**
+     * ルート定義
+     */
+    public static class Route {
+        final String method;
+        final Pattern pattern;
+        final RequestHandler handler;
+        Matcher matcher;
+
+        public Route(String method, String regexPath, RequestHandler handler) {
+            this.method = method;
+            this.pattern = Pattern.compile(regexPath);
+            this.handler = handler;
+        }
+
+        public boolean matches(String method, String path) {
+            if (!this.method.equalsIgnoreCase(method)) {
+                return false;
+            }
+            Matcher matcher = pattern.matcher(path);
+            if (!matcher.matches()) {
+                return false;
+            }
+            this.matcher = matcher;
+            return true;
         }
     }
 
@@ -215,40 +243,5 @@ public class MockApiServer2 {
         user.put("userId", userId);
         user.put("userName", userName);
         return user;
-    }
-
-    /**
-     * ルート定義の型
-     */
-    public static class Route {
-        final String method;
-        final Pattern pattern;
-        final RequestHandler handler;
-        Matcher matcher;
-
-        public Route(String method, String regexPath, RequestHandler handler) {
-            this.method = method;
-            this.pattern = Pattern.compile(regexPath);
-            this.handler = handler;
-        }
-
-        public boolean matches(String method, String path) {
-            if (!this.method.equalsIgnoreCase(method)) {
-                return false;
-            }
-            Matcher matcher = pattern.matcher(path);
-            if (!matcher.matches()) {
-                return false;
-            }
-            this.matcher = matcher;
-            return true;
-        }
-    }
-
-    /**
-     * リクエストハンドラーのインターフェース定義
-     */
-    private interface RequestHandler {
-        void handle(HttpExchange exchange, Matcher pathMatcher);
     }
 }
