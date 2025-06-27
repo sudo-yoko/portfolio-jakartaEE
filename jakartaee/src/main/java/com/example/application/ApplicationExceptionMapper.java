@@ -8,9 +8,9 @@ import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
 @Provider
-public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
-    private static final Logger logger = Logger.getLogger(GlobalExceptionMapper.class.getName());
-    private static final String LOG_PREFIX = ">>> [" + GlobalExceptionMapper.class.getSimpleName() + "]: ";
+public class ApplicationExceptionMapper implements ExceptionMapper<Throwable> {
+    private static final Logger logger = Logger.getLogger(ApplicationExceptionMapper.class.getName());
+    private static final String LOG_PREFIX = ">>> [" + ApplicationExceptionMapper.class.getSimpleName() + "]: ";
 
     @Override
     public Response toResponse(Throwable t) {

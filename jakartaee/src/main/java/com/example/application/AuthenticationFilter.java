@@ -2,7 +2,7 @@ package com.example.application;
 
 import java.io.IOException;
 
-import com.example.Properties;
+import com.example.ApplicationProperties;
 import com.example.infrastructure.auth.AuthCache;
 import com.example.infrastructure.auth.AuthInfo;
 import com.example.infrastructure.auth.AuthResult;
@@ -34,7 +34,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         if (apiKey == null || apiKey.isBlank()) {
             throw new BadRequestException("APIキーが設定されていません。");
         }
-        AuthResult result = authCache.authenticate(Properties.get("application.name"), apiKey);
+        AuthResult result = authCache.authenticate(ApplicationProperties.get("application.name"), apiKey);
         authInfo.setAuthResult(result);
     }
 }

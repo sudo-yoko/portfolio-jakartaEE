@@ -3,7 +3,7 @@ package com.example;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 
-public class Properties {
+public class ApplicationProperties {
     private static final ResourceBundle bundle = ResourceBundle.getBundle("application");
 
     public static String get(String key) {

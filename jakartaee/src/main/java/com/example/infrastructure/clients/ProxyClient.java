@@ -5,7 +5,7 @@ import java.net.ProxySelector;
 import java.net.http.HttpClient;
 import java.util.logging.Logger;
 
-import com.example.Properties;
+import com.example.ApplicationProperties;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -23,8 +23,8 @@ public class ProxyClient {
     private void init() {
         HttpClient.Builder builder = HttpClient.newBuilder();
 
-        String host = Properties.get("proxy.host");
-        int port = Properties.getInt("proxy.port");
+        String host = ApplicationProperties.get("proxy.host");
+        int port = ApplicationProperties.getInt("proxy.port");
         logger.info(LOG_PREFIX + String.format("Proxy host: %s, Proxy port: %s", host, port));
 
         InetSocketAddress proxyAddress = new InetSocketAddress(host, port);

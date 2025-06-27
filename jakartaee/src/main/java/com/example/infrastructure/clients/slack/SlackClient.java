@@ -8,7 +8,7 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
-import com.example.Properties;
+import com.example.ApplicationProperties;
 import com.example.infrastructure.clients.ProxyClient;
 
 import jakarta.ejb.Stateless;
@@ -25,7 +25,7 @@ public class SlackClient {
     private ProxyClient client;
 
     public void postMessage(String message) {
-        String webhookUrl = Properties.get("slack.webhook.url");
+        String webhookUrl = ApplicationProperties.get("slack.webhook.url");
 
         JsonObject body = Json.createObjectBuilder().add("text", message).build();
         HttpRequest request = HttpRequest.newBuilder()

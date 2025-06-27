@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.example.Properties;
+import com.example.ApplicationProperties;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Singleton;
@@ -19,7 +19,7 @@ import jakarta.ws.rs.core.Response;
 @Startup
 public class InMemoryAuthCache implements AuthCache {
     private final Map<String, Map<String, List<Permission>>> permissionMap = new HashMap<>();
-    private final String APPLICATION_NAME = Properties.get("application.name");
+    private final String APPLICATION_NAME = ApplicationProperties.get("application.name");
 
     @PostConstruct
     private void init() {
