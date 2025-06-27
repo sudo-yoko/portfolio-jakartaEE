@@ -2,7 +2,6 @@ package com.example.application.users;
 
 import com.example.OffsetDateTimeUtils;
 import com.example.domain.entities.User;
-import com.example.domain.services.UserService;
 import com.example.infrastructure.clients.slack.SlackClientAsyncAdapter;
 
 import jakarta.enterprise.context.RequestScoped;
@@ -12,12 +11,12 @@ import jakarta.ws.rs.NotFoundException;
 @RequestScoped
 public class UsersInteractor {
     @Inject
-    private UserService service;
+    private UsersServiceProxy proxy;
     @Inject
     private SlackClientAsyncAdapter slack;
 
     public UsersResponse getUser(String userId) {
-        User user = service.findUser(userId);
+        User user = proxy.findUser(userId);
         if (user == null) {
             throw new NotFoundException("ユーザー情報がありません。");
         }
@@ -25,6 +24,7 @@ public class UsersInteractor {
         response.setUserId(user.getUserId());
         response.setUserName(user.getUserName());
         response.setTimestamp(OffsetDateTimeUtils.toJapanIsoString(user.getTimestamp()));
+        response.setVersion(Long.toString(user.getVersion()));
         return response;
     }
 
@@ -32,7 +32,7 @@ public class UsersInteractor {
         User user = new User();
         user.setUserId(request.getUserId());
         user.setUserName(request.getUserName());
-        service.createUser(user);
+        proxy.createUser(user);
         slack.postMessageAsync(String.format("ユーザーが登録されました。[%s]", user.getUserId()));
     }
 
@@ -40,10 +40,14 @@ public class UsersInteractor {
         User user = new User();
         user.setUserId(request.getUserId());
         user.setUserName(request.getUserName());
-        service.createOrReplaceUser(user);
+        proxy.createOrReplaceUser(user);
+    }
+
+    public void deactivateUser(String userId) {
+        proxy.deactivateUser(userId);
     }
 
     public void deleteUser(String userId) {
-        service.deactivateUser(userId);
+        proxy.deleteUser(userId);
     }
 }

@@ -11,6 +11,7 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 
 @Entity
 @Table(schema = "DEV", name = "USER_INFO")
@@ -30,6 +31,10 @@ public class User implements Serializable {
 
     @Column(name = "TIMESTAMP")
     private LocalDateTime timestamp;
+
+    @Version
+    @Column(name = "VERSION")
+    private long version;
 
     @PrePersist
     private void prePersist() {
@@ -74,6 +79,10 @@ public class User implements Serializable {
         return timestamp;
     }
 
+    public long getVersion() {
+        return version;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -81,7 +90,8 @@ public class User implements Serializable {
         sb.append("userId=").append(userId).append(", ");
         sb.append("userName=").append(userName).append(", ");
         sb.append("deleted=").append(deleted).append(", ");
-        sb.append("timestamp=").append(timestamp);
+        sb.append("timestamp=").append(timestamp).append(", ");
+        sb.append("version=").append(version);
         sb.append(" }");
         return sb.toString();
     }

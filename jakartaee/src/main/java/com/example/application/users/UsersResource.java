@@ -84,6 +84,7 @@ public class UsersResource {
         logger.info(LOG_PREFIX + String.format("Request(inbound) DELETE -> userId=%s", userId));
 
         UserId.Validator.validate(userId);
+        // interactor.deactiveUser(userId);
         interactor.deleteUser(userId);
         return Response.ok().build();
     }

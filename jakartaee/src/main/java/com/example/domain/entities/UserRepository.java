@@ -23,6 +23,10 @@ public class UserRepository {
         return em.merge(entity);
     }
 
+    public void remove(User entity) {
+        em.remove(entity);
+    }
+
     public User findActive(String pk) {
         try {
             return em.createNamedQuery("User.findActive", User.class)

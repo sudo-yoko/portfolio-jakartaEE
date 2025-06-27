@@ -5,7 +5,6 @@ import com.example.domain.entities.UserRepository;
 
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
 @Stateless
@@ -38,7 +37,8 @@ public class UserService {
             return;
         }
 
-        throw new EntityExistsException("ユーザーは存在しています。");
+        // throw new EntityExistsException("ユーザーは存在しています。");
+        repository.persist(user);
     }
 
     public void createOrReplaceUser(User user) {
@@ -64,5 +64,13 @@ public class UserService {
         }
         existingUser.setDeleted(true);
         repository.merge(existingUser);
+    }
+
+    public void deleteUser(String userId) {
+        User entity = repository.find(userId);
+        if (entity == null) {
+            throw new EntityNotFoundException("削除対象のユーザは存在しません。");
+        }
+        repository.remove(entity);
     }
 }

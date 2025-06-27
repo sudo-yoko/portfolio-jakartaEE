@@ -2,6 +2,7 @@ package com.example.application;
 
 import java.util.logging.Logger;
 
+import com.example.ApplicationDatabaseException;
 import com.example.ValidationErrorException;
 
 import jakarta.ws.rs.WebApplicationException;
@@ -23,6 +24,8 @@ public class ErrorResponseFactory {
             builder = handleWebApplicationException((WebApplicationException) cause);
         } else if (cause instanceof ValidationErrorException) {
             builder = handleValidationErrorException((ValidationErrorException) cause);
+        } else if (cause instanceof ApplicationDatabaseException) {
+            builder = handleApplicationDatabaseException((ApplicationDatabaseException) cause);
         } else {
             builder = handleOtherException(cause);
         }
@@ -59,6 +62,14 @@ public class ErrorResponseFactory {
                     cause.getClass().getSimpleName(),
                     String.format("%s[%s]", d.getMessage(), d.getField()));
         });
+        return Response.status(status).entity(entity);
+    }
+
+    public static ResponseBuilder handleApplicationDatabaseException(ApplicationDatabaseException cause) {
+        int status = cause.getStatus();
+        ErrorResponse entity = new ErrorResponse(
+                cause.getClass().getSimpleName(),
+                cause.getMessage());
         return Response.status(status).entity(entity);
     }
 

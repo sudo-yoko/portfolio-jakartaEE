@@ -19,6 +19,10 @@
     },*/
   "explorer.compactFolders": false,
   "workbench.tree.indent": 20,
+  "workbench.colorCustomizations": {
+    "editor.selectionBackground": "#4f93ff88", // 通常の選択色（単語を選択したときの背景）
+    "editor.selectionHighlightBackground": "#4f93ff44", // 通常された単語と同じ単語の選択色（少し透明度をつけた一致色）
+  },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
