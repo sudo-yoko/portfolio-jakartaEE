@@ -32,8 +32,7 @@ public class UserTest {
         String userId = "12345";
         String userName = "テスト 太郎";
         Clock clock = Clock.system(ZoneId.of("Asia/Tokyo"));
-        // Clock clock = Clock.fixed(Instant.parse("2025-01-01T00:00:00Z"),
-        // ZoneId.of("UTC"));
+        // Clock clock = Clock.fixed(Instant.parse("2025-01-01T00:00:00Z"), ZoneId.of("UTC"));
         LocalDateTime timestamp = LocalDateTime.now(clock).truncatedTo(ChronoUnit.SECONDS);
 
         User user = new User();
