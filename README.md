@@ -34,12 +34,12 @@ ExceptionMapperを用いて未処理の例外を一か所で集中的に処理�
 
 :open_file_folder: コード：[ApplicationClock.java](jakartaee/src/main/java/com/example/ApplicationClock.java)、[ApplicationClockProducer.java](jakartaee/src/main/java/com/example/ApplicationClockProducer.java)
 
-## Properties.java
+## ApplicationProperties.java
 #### プロパティ取得ユーティリティ
 型を指定したプロパティ取得が可能です。型パラメータと関数インターフェースを用いた実装になっています。
 
-:open_file_folder: コード：[Properties.java](jakartaee/src/main/java/com/example/Properties.java)  
-:open_file_folder: 使用例：[PropertiesTest.java](jakartaee/src/test/java/com/example/PropertiesTest.java)
+:open_file_folder: コード：[ApplicationProperties.java](jakartaee/src/main/java/com/example/ApplicationProperties.java)  
+:open_file_folder: 使用例：[ApplicationPropertiesTest.java](jakartaee/src/test/java/com/example/ApplicationPropertiesTest.java)
 
 ## ExtractingJsonSerializer.java
 Javaオブジェクトから指定プロパティのみを抽出してJSON化するカスタムシリアライザ。  
@@ -74,7 +74,7 @@ Javaソースを事前コンパイルしないで直接実行するため、ス�
 #### デスクトップ時計
 Windows タスクバーの時計には分(minutes)までしか表示されません。秒まで表示できるデスクトップ時計です。Swingを使ってGUIを作成しています。
 
-:open_file_folder: コード：[DesktopClocker.java](JEP330/desctop-clocker/DesktopClocker.java)  
+:open_file_folder: コード：[DesktopClocker.java](JEP330/desktop-clocker/DesktopClocker.java)  
 
 #### APIモック
 ローカル環境で起動するAPIモックの実装例です。Java標準のcom.sun.net.httpserver.HttpServerを使っています。
