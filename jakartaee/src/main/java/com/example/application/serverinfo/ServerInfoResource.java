@@ -31,7 +31,7 @@ public class ServerInfoResource {
     public Response getTime() {
         logger.info(LOG_PREFIX + String.format("Request(inbound) -> %s %s", request.getMethod(), uriInfo.getPath()));
 
-        ServerInfoResponse response = interactor.getTime();
+        ServerInfoResponse response = interactor.getNow();
         return Response.ok(response).build();
     }
 }

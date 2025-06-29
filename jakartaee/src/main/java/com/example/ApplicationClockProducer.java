@@ -19,8 +19,16 @@ public class ApplicationClockProducer {
     @PostConstruct
     private void init() {
         clock = Clock.system(ZoneId.of("Asia/Tokyo"));
+        development();
+    }
 
-        // システム時刻を仮想時間に固定
+    @Produces
+    public Clock produceClock() {
+        return clock;
+    }
+
+    private void development() {
+        // システム日時に仮想日時を設定する
         String fixedClock = ApplicationProperties.getOrDefault("test.clock.fixed", "");
         if (!fixedClock.isBlank()) {
             String[] parts = fixedClock.split(",");
@@ -29,10 +37,5 @@ public class ApplicationClockProducer {
             clock = Clock.fixed(Instant.parse(instant), ZoneId.of(zoneId));
             logger.info(LOG_PREFIX + String.format("clock fixed. [%s %s]", instant, zoneId));
         }
-    }
-
-    @Produces
-    public Clock produceClock() {
-        return clock;
     }
 }

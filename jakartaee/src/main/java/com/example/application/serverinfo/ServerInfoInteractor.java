@@ -13,10 +13,10 @@ public class ServerInfoInteractor {
     @Inject
     private ServerInfoService service;
 
-    public ServerInfoResponse getTime() {
-        LocalDateTime time = service.getServerTime();
+    public ServerInfoResponse getNow() {
+        LocalDateTime now = service.getNow();
         ServerInfoResponse response = new ServerInfoResponse();
-        response.setServerTime(time.toString());
+        response.setNow(now.toString());
         return response;
     }
 }

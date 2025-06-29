@@ -2,21 +2,21 @@ package com.example.application.serverinfo;
 
 public class ServerInfoResponse {
 
-    private String serverTime;
+    private String now;
 
-    public String getServerTime() {
-        return serverTime;
+    public String getNow() {
+        return now;
     }
 
-    public void setServerTime(String serverTime) {
-        this.serverTime = serverTime;
+    public void setNow(String now) {
+        this.now = now;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("{ ");
-        sb.append("serverTime=").append(serverTime);
+        sb.append("now=").append(now);
         sb.append(" }");
         return sb.toString();
     }

@@ -11,7 +11,7 @@ import jakarta.inject.Inject;
 public class ApplicationClock {
 
     @Inject
-    private Clock clock;
+    private Clock clock; // ApplicationClockProducer.produceClock(@Produces)からインジェクションされる
 
     public LocalDateTime now() {
         // 秒以下の精度を切り捨て

@@ -12,9 +12,9 @@ import com.example.development.ReflectionUtils;
 
 public class ServerInfoServiceTest {
 
-    // mvn -Dtest=ServerInfoServiceTest#testGetServerTime test
+    // mvn -Dtest=ServerInfoServiceTest#testGetServerDateTime test
     @Test
-    void testGetServerTime() {
+    void testGetServerDateTime() {
         Clock fixedClock = Clock.fixed(Instant.parse("2025-01-02T00:00:00Z"), ZoneId.of("UTC"));
 
         ApplicationClock appClock = new ApplicationClock();
@@ -23,7 +23,7 @@ public class ServerInfoServiceTest {
         ServerInfoService target = new ServerInfoService();
         ReflectionUtils.setFieldValue(target, "clock", appClock);
 
-        LocalDateTime result = target.getServerTime();
+        LocalDateTime result = target.getNow();
         System.out.println(">>> result -> " + result);
     }
 }

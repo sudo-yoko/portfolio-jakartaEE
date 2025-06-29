@@ -13,7 +13,7 @@ public class ServerInfoService {
     @Inject
     private ApplicationClock clock;
 
-    public LocalDateTime getServerTime() {
+    public LocalDateTime getNow() {
         return clock.now();
     }
 }
