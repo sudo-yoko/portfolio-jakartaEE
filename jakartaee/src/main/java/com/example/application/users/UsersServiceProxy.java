@@ -2,7 +2,7 @@ package com.example.application.users;
 
 import com.example.domain.EjbExceptionTranslator;
 import com.example.domain.entities.user.User;
-import com.example.domain.services.UserService;
+import com.example.domain.services.users.UserService;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;

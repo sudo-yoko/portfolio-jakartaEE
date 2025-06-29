@@ -1,4 +1,4 @@
-package com.example.domain.services;
+package com.example.domain.services.users;
 
 import com.example.domain.entities.user.User;
 import com.example.domain.entities.user.UserRepository;
