@@ -27,8 +27,12 @@ JAX-RSアプリケーションを利用するクライアントを認証しま�
 #### 例外ハンドリング
 ExceptionMapperを用いて未処理の例外を一か所で集中的に処理し、アプリケーション全体で一貫した形式のエラーレスポンスを生成します。
 
-:open_file_folder: コード：[GlobalExceptionMapper.java](jakartaee/src/main/java/com/example/application/GlobalExceptionMapper.java)、[ErrorResponseFactory.java](jakartaee/src/main/java/com/example/application/ErrorResponseFactory.java)、[ErrorResponse.java](jakartaee/src/main/java/com/example/application/ErrorResponse.java)
+:open_file_folder: コード：[ApplicationExceptionMapper.java](jakartaee/src/main/java/com/example/application/ApplicationExceptionMapper.java)、[ErrorResponseFactory.java](jakartaee/src/main/java/com/example/application/ErrorResponseFactory.java)、[ErrorResponse.java](jakartaee/src/main/java/com/example/application/ErrorResponse.java)
 
+#### システム日時ユーティリティ
+`java.time.Clock` を利用したユーティリティです。Clock を差し替えることで、システム日時に仮想日時を設定できます。これにより、日時に依存する業務ロジックのテストが容易になり、テスタビリティが向上します。
+
+:open_file_folder: コード：[ApplicationClock.java](jakartaee/src/main/java/com/example/ApplicationClock.java)、[ApplicationClockProducer.java](jakartaee/src/main/java/com/example/ApplicationClockProducer.java)
 
 ## Properties.java
 #### プロパティ取得ユーティリティ
