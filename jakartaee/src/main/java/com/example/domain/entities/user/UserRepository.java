@@ -1,12 +1,18 @@
-package com.example.domain.entities;
+package com.example.domain.entities.user;
+
+import com.example.ApplicationClock;
 
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 
 @Stateless
 public class UserRepository {
+
+    @Inject
+    private ApplicationClock clock;
 
     @PersistenceContext(unitName = "DEV_PU1")
     private EntityManager em;
@@ -16,10 +22,12 @@ public class UserRepository {
     }
 
     public void persist(User entity) {
+        entity.setTimestamp(clock.now());
         em.persist(entity);
     }
 
     public User merge(User entity) {
+        entity.setTimestamp(clock.now());
         return em.merge(entity);
     }
 

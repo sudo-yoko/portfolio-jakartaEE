@@ -1,11 +1,17 @@
 package com.example.domain.entities;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.example.development.EntityManagerProvider;
 import com.example.development.EntityManagerProvider.PersistenceUnitName;
+import com.example.domain.entities.user.User;
+import com.example.domain.entities.user.UserRepository;
 import com.example.development.ReflectionUtils;
 
 import jakarta.persistence.EntityManager;
@@ -28,6 +34,7 @@ public class UserRepositoryTest1 {
     }
 
     // mvn -Dtest=UserRepositoryTest1#test test -Duser.timezone=Asia/Tokyo
+    // mvn -Dtest=UserRepositoryTest1#test test
     @Test
     void test() {
         String userId = "12345";
@@ -36,6 +43,10 @@ public class UserRepositoryTest1 {
         User user = new User();
         user.setUserId(userId);
         user.setUserName(userName);
+
+        // Clock clock = Clock.system(ZoneId.of("Asia/Tokyo")); // システム時刻(日本時間)
+        //Clock clock = Clock.fixed(Instant.parse("2025-01-01T00:00:00Z"), ZoneId.of("UTC")); // システム時刻(固定値)
+        //ReflectionUtils.setFieldValue(user, "clock", clock);
 
         EntityManager em = ReflectionUtils.getFieldValue(repository, "em", EntityManager.class);
         EntityTransaction transaction = em.getTransaction();

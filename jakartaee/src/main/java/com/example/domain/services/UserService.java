@@ -1,7 +1,7 @@
 package com.example.domain.services;
 
-import com.example.domain.entities.User;
-import com.example.domain.entities.UserRepository;
+import com.example.domain.entities.user.User;
+import com.example.domain.entities.user.UserRepository;
 
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;

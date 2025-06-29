@@ -27,7 +27,8 @@ public class InMemoryAuthCache implements AuthCache {
                 new Permission("GET", "users/"),
                 new Permission("POST", "users/"),
                 new Permission("PUT", "users/"),
-                new Permission("DELETE", "users/"));
+                new Permission("DELETE", "users/"),
+                new Permission("GET", "server-info/"));
         permissionMap.put("key-00001", Map.of(APPLICATION_NAME, permissions));
     }
 

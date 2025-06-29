@@ -1,0 +1,2 @@
+GET http://localhost:8080/jakartaee/server-info/time
+X-Api-Key: key-00001

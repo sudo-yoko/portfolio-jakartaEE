@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import com.example.development.EntityManagerProvider;
 import com.example.development.EntityManagerProvider.PersistenceUnitName;
 import com.example.domain.EjbExceptionTranslator;
+import com.example.domain.entities.user.User;
+import com.example.domain.entities.user.UserRepository;
 import com.example.development.ReflectionUtils;
 
 import jakarta.persistence.EntityManager;

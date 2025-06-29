@@ -1,7 +1,7 @@
 package com.example.application.users;
 
 import com.example.OffsetDateTimeUtils;
-import com.example.domain.entities.User;
+import com.example.domain.entities.user.User;
 import com.example.infrastructure.clients.slack.SlackClientAsyncAdapter;
 
 import jakarta.enterprise.context.RequestScoped;
@@ -10,6 +10,7 @@ import jakarta.ws.rs.NotFoundException;
 
 @RequestScoped
 public class UsersInteractor {
+    
     @Inject
     private UsersServiceProxy proxy;
     @Inject
