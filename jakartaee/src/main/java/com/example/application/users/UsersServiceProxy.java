@@ -1,6 +1,6 @@
 package com.example.application.users;
 
-import com.example.domain.EjbExceptionTranslator;
+import com.example.domain.EJBExceptionTranslator;
 import com.example.domain.entities.user.User;
 import com.example.domain.services.users.UserService;
 
@@ -18,7 +18,7 @@ public class UsersServiceProxy {
             return service.findUser(userId);
         } catch (Exception e) {
             String errorDetail = String.format("ユーザーID=%s", userId);
-            throw EjbExceptionTranslator.translate(e, errorDetail);
+            throw EJBExceptionTranslator.translate(e, errorDetail);
         }
     }
 
@@ -27,7 +27,7 @@ public class UsersServiceProxy {
             service.createUser(user);
         } catch (Exception e) {
             String errorDetail = String.format("ユーザーID=%s", user.getUserId());
-            throw EjbExceptionTranslator.translate(e, errorDetail);
+            throw EJBExceptionTranslator.translate(e, errorDetail);
         }
     }
 
@@ -36,7 +36,7 @@ public class UsersServiceProxy {
             service.createOrReplaceUser(user);
         } catch (Exception e) {
             String errorDetail = String.format("ユーザーID=%s", user.getUserId());
-            throw EjbExceptionTranslator.translate(e, errorDetail);
+            throw EJBExceptionTranslator.translate(e, errorDetail);
         }
     }
 
@@ -45,7 +45,7 @@ public class UsersServiceProxy {
             service.deactivateUser(userId);
         } catch (Exception e) {
             String errorDetail = String.format("ユーザーID=%s", userId);
-            throw EjbExceptionTranslator.translate(e, errorDetail);
+            throw EJBExceptionTranslator.translate(e, errorDetail);
         }
     }
 
@@ -54,7 +54,7 @@ public class UsersServiceProxy {
             service.deleteUser(userId);
         } catch (Exception e) {
             String errorDetail = String.format("ユーザーID=%s", userId);
-            throw EjbExceptionTranslator.translate(e, errorDetail);
+            throw EJBExceptionTranslator.translate(e, errorDetail);
         }
     }
 }

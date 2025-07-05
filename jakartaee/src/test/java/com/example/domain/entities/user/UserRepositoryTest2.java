@@ -68,7 +68,7 @@ public class UserRepositoryTest2 {
 
         Exception e = assertThrows(Exception.class, () -> tran1.commit());
         e.printStackTrace();
-        // Exception ex = EjbExceptionTranslator.translate(e, "エラー詳細");
+        // Exception ex = EJBExceptionTranslator.translate(e, "エラー詳細");
         // ex.printStackTrace();
         assertTrue(isCausedBy(e, OptimisticLockException.class), "楽観ロックエラーが発生していないためテスト失敗");
 

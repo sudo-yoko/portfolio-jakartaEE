@@ -7,13 +7,9 @@ import com.example.ApplicationDatabaseException;
 import jakarta.persistence.PersistenceException;
 import jakarta.ws.rs.core.Response.Status;
 
-/**
- * EJB層で発生した例外をカスタム例外にラップする。
- * 主にデータベース関連の例外で、JPA実装やデータベースプロバイダー固有の例外を、アプリケーション共通のカスタム例外にラップする
- */
-public class EjbExceptionTranslator {
-    private static final Logger logger = Logger.getLogger(EjbExceptionTranslator.class.getName());
-    private static final String LOG_PREFIX = ">>> [" + EjbExceptionTranslator.class.getSimpleName() + "]: ";
+public class EJBExceptionTranslator {
+    private static final Logger logger = Logger.getLogger(EJBExceptionTranslator.class.getName());
+    private static final String LOG_PREFIX = ">>> [" + EJBExceptionTranslator.class.getSimpleName() + "]: ";
 
     public static RuntimeException translate(Throwable t, String errorDetail) {
         logger.severe(LOG_PREFIX + t.getMessage());
