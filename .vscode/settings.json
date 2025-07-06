@@ -30,14 +30,18 @@
   "[java]": {
     "editor.defaultFormatter": "redhat.java"
   },
+  /*
   "java.configuration.runtimes": [
     {
       "name": "JavaSE-11",
       "path": "/usr/lib/jvm/msopenjdk-current"
     }
-  ],
+  ],*/
   "java.configuration.updateBuildConfiguration": "interactive",
   "java.inlayHints.parameterNames.enabled": "none",
   "window.zoomLevel": 1,
-  "editor.codeLens": false
+  "editor.codeLens": false,
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  }
 }

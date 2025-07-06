@@ -1,8 +1,20 @@
-
 {
-	"name": "Java",
-	"image": "mcr.microsoft.com/devcontainers/java:1-11-bullseye"
+	"name": "Debian",
+	"image": "mcr.microsoft.com/devcontainers/base:bullseye"
 }
-// コンテナ作成後以下のコマンドでMavenを追加
+// コンテナ作成後に以下のコマンド
+// Mavenを追加
 // sudo apt update
 // sudo apt install -y maven
+// Java11追加
+// sudo apt-get update
+// sudo apt-get install -y openjdk-11-jdk
+// Java17追加
+// sudo apt-get update
+// sudo apt-get install -y openjdk-17-jdk
+// Java切り替え(java)
+// sudo update-alternatives --config java
+// Java切り替え(javac)
+// sudo update-alternatives --config javac
+// 
+// rm -rf ~/.m2/repository
